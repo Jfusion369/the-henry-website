@@ -1,0 +1,23 @@
+{
+  "name": "the-henry-website",
+  "version": "1.0.0",
+  "description": "A website for The Henry LLC, revitalizing rural main street in Henry County, Kentucky.",
+  "main": "src/index.html",
+  "scripts": {
+    "start": "live-server src",
+    "build": "echo 'Build process not defined yet.'"
+  },
+  "keywords": [
+    "Henry",
+    "Kentucky",
+    "rural",
+    "community",
+    "business"
+  ],
+  "author": "Amy Foree and Joshua Foree",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "live-server": "^1.2.1"
+  }
+}

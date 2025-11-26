@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Henry LLC - Revitalizing Rural Main Street</title>
+    <link rel="stylesheet" href="styles/styles.css">
+    <style>
+        .henry-header-title {
+            font-family: "Georgia", "Garamond", serif;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+        .login-container {
+            max-width: 400px;
+            margin: 60px auto;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+        .login-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .login-header h2 {
+            color: #9E1B32;
+            margin: 0 0 10px 0;
+            font-size: 1.6rem;
+        }
+        .login-header p {
+            color: #666;
+            margin: 0;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+            box-sizing: border-box;
+        }
+        .form-group input:focus {
+            outline: none;
+            border-color: #9E1B32;
+        }
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            background: #9E1B32;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        .login-btn:hover {
+            background: #7d1627;
+        }
+        .login-btn:active {
+            transform: scale(0.98);
+        }
+        .error-message {
+            display: none;
+            padding: 12px;
+            background: #fee;
+            color: #c33;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .remember-me {
+            display: flex;
+            align-items: center;
+            margin: 15px 0;
+        }
+        .remember-me input {
+            width: auto;
+            margin-right: 8px;
+        }
+        .remember-me label {
+            margin: 0;
+            font-weight: 400;
+        }
+        .footer-text {
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        .security-notice {
+            background: #f0f8ff;
+            border-left: 4px solid #9E1B32;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            color: #333;
+        }
+        .admin-section {
+            background: #f9f9f9;
+            padding: 40px 20px;
+            margin-top: 40px;
+            border-top: 2px solid #ddd;
+            display: none;
+        }
+        
+        .admin-section.show {
+            display: block;
+        }
+        
+        /* Ensure hamburger stays visible on mobile */
+        @media (max-width: 720px) {
+            .hamburger {
+                z-index: 9999 !important;
+            }
+            .sidebar {
+                z-index: 9998 !important;
+            }
+            .overlay {
+                z-index: 9997 !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hamburger button -->
+    <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <!-- Sidebar navigation -->
+    <nav class="sidebar" id="sidebar">
+        <a href="admin-login.html">Home</a>
+        <a href="rooted-salon.html">Rooted Salon</a>
+        <a href="fill-my-cup.html">Fill My Cup Cafe</a>
+        <a href="market.html">Market</a>
+        <a href="court-yard.html">Court Yard</a>
+        <a href="events.html">Events</a>
+        <a href="admin-login.html#contact">Contact</a>
+    </nav>
+
+    <!-- Dark overlay -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Desktop navigation -->
+    <nav class="nav-desktop">
+        <ul>
+            <li><a href="admin-login.html">Home</a></li>
+            <li><a href="rooted-salon.html">Rooted Salon</a></li>
+            <li><a href="fill-my-cup.html">Fill My Cup Cafe</a></li>
+            <li><a href="market.html">Market</a></li>
+            <li><a href="court-yard.html">Court Yard</a></li>
+            <li><a href="events.html">Events</a></li>
+            <li><a href="admin-login.html#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <header>
+        <div class="container header-inner">
+            <h1 class="site-title henry-header-title">The Henry LLC</h1>
+            <p class="site-subtitle">Revitalizing and Bolstering Rural Main Street in Henry County, Kentucky</p>
+        </div>
+    </header>
+
+    <section id="about" class="container">
+        <h2>About Us</h2>
+        <p>The Henry LLC is a visionary company located at 10 Court Street in New Castle, Kentucky. This 5,500 square foot commercial space will house a coffee shop, hair salon, and a multi-vendor marketplace. Additional service offerings include office space for local entrepreneurs.</p>
+        <p>Principal owners: Amy Foree and Joshua Foree. Proposed opening date: April 2026.</p>
+        <p>Primary sources of revenue include retail space rental, office space rental, and vendor space rental. We plan to open in three phases.</p>
+    </section>
+
+    <section id="phases" class="container">
+        <h2>Business Plan</h2>
+        <div class="table-wrap">
+        <table>
+            <tr>
+                <th>Business</th>
+                <th>Business Description</th>
+                <th>Proposed Opening Date</th>
+            </tr>
+            <tr>
+                <td><a href="rooted-salon.html" class="phase-link">Rooted Salon</a></td>
+                <td>Rooted Salon LLC - A full-service hair salon owned and operated by Amy Foree and Karen Gilliland-White. An established and experienced team serves as primary revenue generator.</td>
+                <td>April 2026</td>
+            </tr>
+            <tr>
+                <td><a href="fill-my-cup.html" class="phase-link">Fill My Cup Cafe</a></td>
+                <td>Fill My Cup Cafe - A faith-based business that uses a counter service coffee shop concept to help transform lives. Amy and Joshua will own and operate this business.</td>
+                <td>TBD</td>
+            </tr>
+             <tr>
+                <td><a href="market.html" class="phase-link">Market</a></td>
+                <td>Market @ The Henry, we celebrate the heart of our community by bringing together the very best of Henry, Oldham, Shelby, and Trimble counties. From fresh organic produce grown from local Farms to farm-raised meats and handcrafted local goods, every item is chosen with care to bring both flavor and meaning to your table.</td>
+                <td>TBD</td>
+            </tr>
+            <tr>
+                <td><a href="court-yard.html" class="phase-link">The Court Yard</a></td>
+                <td>The Court Yard - A multi-vendor marketplace that provides office space for local entrepreneurs and booth space for local creatives, artisans, and artists.</td>
+                <td>TBD</td>
+            </tr>
+        </table>
+        </div>
+    </section>
+
+    <section id="featured-vendor" class="container featured-vendor">
+        <h2>Featured This Month</h2>
+        <div class="featured-card">
+            <div class="featured-image">
+                🎨
+            </div>
+            <h3>Rooted Salon LLC</h3>
+            <p class="featured-tagline">Full-Service Hair Salon</p>
+            <p>Discover professional hair care services from experienced stylists Amy Foree and Karen Gilliland-White. Rooted Salon brings quality and expertise to New Castle, opening April 2026.</p>
+            <a href="rooted-salon.html" class="btn btn-secondary">Learn More</a>
+        </div>
+    </section>
+
+    <section id="newsletter" class="container newsletter">
+        <h2>Join Our Community</h2>
+        <p>Subscribe to our newsletter for exclusive updates, events, and special offers from The Henry LLC and our tenant businesses.</p>
+        
+        <form id="newsletter-form" class="newsletter-form">
+            <input 
+                type="email" 
+                id="newsletter-email" 
+                name="email" 
+                placeholder="Enter your email address" 
+                required
+                aria-label="Email address"
+            >
+            <button type="submit" class="btn btn-primary">Subscribe</button>
+        </form>
+        <div id="newsletter-message" class="newsletter-message"></div>
+    </section>
+
+    <section id="contact" class="container contact">
+        <h2>Contact Us</h2>
+        <p>Location: 10 Court Street, New Castle, Kentucky</p>
+        <p>Owners: Amy Foree and Joshua Foree</p>
+        <p>Email: info@thehenryllc.com (placeholder - replace with real email)</p>
+        <p>Phone: (123) 456-7890 (placeholder - replace with real number)</p>
+    </section>
+
+    <!-- Admin Login Section -->
+    <div class="admin-section">
+        <div class="login-container">
+            <div class="login-header">
+                <h2>Admin Portal</h2>
+                <p>Staff & Management Access</p>
+            </div>
+
+            <div id="errorMessage" class="error-message"></div>
+
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" placeholder="Enter your username" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                </div>
+
+                <div class="remember-me">
+                    <input type="checkbox" id="rememberMe" name="rememberMe">
+                    <label for="rememberMe">Remember me</label>
+                </div>
+
+                <button type="submit" class="login-btn">Login</button>
+            </form>
+
+            <div class="security-notice">
+                ⚠️ <strong>Security Notice:</strong> This is a demonstration admin portal. In production, use proper authentication protocols (OAuth, JWT, etc.) and HTTPS encryption.
+            </div>
+
+            <div class="footer-text">
+                <p>For access requests, contact: admin@thehenryllc.com</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <!-- Services Section -->
+                <div class="footer-section">
+                    <h3>Services</h3>
+                    <ul>
+                        <li><a href="rooted-salon.html">Rooted Salon</a></li>
+                        <li><a href="fill-my-cup.html">Fill My Cup Cafe</a></li>
+                        <li><a href="market.html">Market</a></li>
+                        <li><a href="court-yard.html">The Court Yard</a></li>
+                    </ul>
+                </div>
+
+                <!-- Community Section -->
+                <div class="footer-section">
+                    <h3>Community</h3>
+                    <ul>
+                        <li><a href="admin-login.html#about">About Us</a></li>
+                        <li><a href="admin-login.html#featured-vendor">Featured This Month</a></li>
+                        <li><a href="events.html">Events</a></li>
+                        <li><a href="admin-login.html#newsletter">Newsletter</a></li>
+                    </ul>
+                </div>
+
+                <!-- Connect Section -->
+                <div class="footer-section">
+                    <h3>Connect</h3>
+                    <ul>
+                        <li><a href="social-media.html">Follow Us</a></li>
+                        <li><a href="mailto:info@thehenryllc.com">Email Us</a></li>
+                        <li><a href="tel:(123) 456-7890">Call Us</a></li>
+                        <li><a href="admin-login.html#contact">Contact Info</a></li>
+                    </ul>
+                </div>
+
+                <!-- Location Section -->
+                <div class="footer-section">
+                    <h3>Location</h3>
+                    <p style="margin: 0; line-height: 1.8; color: #ddd;">
+                        The Henry LLC<br>
+                        10 Court Street<br>
+                        New Castle, Kentucky<br>
+                        <br>
+                        <a href="tel:(123) 456-7890" style="color: #9E1B32; font-weight: 600;">(123) 456-7890</a>
+                    </p>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 The Henry LLC. All rights reserved.</p>
+                <p style="margin-top: 10px; font-size: 0.85em;">
+                    <a href="#" style="color: #999;">Privacy Policy</a> • 
+                    <a href="#" style="color: #999;">Terms of Service</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="scripts/main.js"></script>
+    <script>
+        // Keyboard shortcut to reveal admin portal (Ctrl+Alt+A)
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && e.altKey && e.key === 'a') {
+                e.preventDefault();
+                const adminSection = document.querySelector('.admin-section');
+                adminSection.classList.toggle('show');
+                if (adminSection.classList.contains('show')) {
+                    adminSection.scrollIntoView({ behavior: 'smooth' });
+                    document.getElementById('username').focus();
+                }
+            }
+        });
+
+        function handleLogin(event) {
+            event.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const errorMessage = document.getElementById('errorMessage');
+
+            // Demo credentials (for demonstration only)
+            const validUsername = 'admin';
+            const validPassword = 'thehenry2026';
+
+            if (username === validUsername && password === validPassword) {
+                // Simulate successful login
+                localStorage.setItem('adminLoggedIn', 'true');
+                if (document.getElementById('rememberMe').checked) {
+                    localStorage.setItem('rememberUsername', username);
+                }
+                
+                errorMessage.style.display = 'none';
+                alert('Login successful! Welcome to The Henry LLC Admin Portal.');
+                // In production, redirect to dashboard: window.location.href = '/admin/dashboard.html';
+                document.getElementById('loginForm').reset();
+            } else {
+                // Show error
+                errorMessage.style.display = 'block';
+                errorMessage.textContent = 'Invalid username or password. Try admin / thehenry2026';
+                document.getElementById('password').focus();
+            }
+        }
+
+        // Check if user was previously logged in
+        window.addEventListener('load', function() {
+            if (localStorage.getItem('rememberUsername')) {
+                document.getElementById('username').value = localStorage.getItem('rememberUsername');
+                document.getElementById('rememberMe').checked = true;
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Market - The Henry LLC</title>
+    <link rel="stylesheet" href="styles/styles.css">
+    <style>
+        .site-title {
+            font-family: "Brush Script MT", "Lucida Handwriting", cursive;
+            font-weight: bold;
+            font-style: italic;
+        }
+        
+        /* Ensure hamburger stays visible on mobile */
+        @media (max-width: 720px) {
+            .hamburger {
+                z-index: 9999 !important;
+            }
+            .sidebar {
+                z-index: 9998 !important;
+            }
+            .overlay {
+                z-index: 9997 !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hamburger button -->
+    <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <!-- Sidebar navigation -->
+    <nav class="sidebar" id="sidebar">
+        <a href="admin-login.html">Home</a>
+        <a href="rooted-salon.html">Rooted Salon</a>
+        <a href="fill-my-cup.html">Fill My Cup Cafe</a>
+        <a href="market.html">Market</a>
+        <a href="court-yard.html">Court Yard</a>
+        <a href="events.html">Events</a>
+        <a href="admin-login.html#contact">Contact</a>
+    </nav>
+
+    <!-- Dark overlay -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Desktop navigation -->
+    <nav class="nav-desktop">
+        <ul>
+            <li><a href="admin-login.html">Home</a></li>
+            <li><a href="rooted-salon.html">Rooted Salon</a></li>
+            <li><a href="fill-my-cup.html">Fill My Cup Cafe</a></li>
+            <li><a href="market.html">Market</a></li>
+            <li><a href="court-yard.html">Court Yard</a></li>
+            <li><a href="events.html">Events</a></li>
+            <li><a href="admin-login.html#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <header>
+        <div class="container header-inner">
+            <h1 class="site-title">Market</h1>
+            <p class="site-subtitle">Local Vendor & Retail Space</p>
+        </div>
+    </header>
+
+    <section id="about" class="container">
+        <h2>About Our Market</h2>
+        <p>The Market is a dedicated space within The Henry LLC designed for local vendors and retail entrepreneurs. We provide flexible retail space for businesses looking to establish or expand their presence in New Castle, Kentucky.</p>
+        <p><strong>Opening Date:</strong> TBD</p>
+        <p><strong>Space Type:</strong> Retail vendor booths and storefronts</p>
+    </section>
+
+    <section id="opportunities" class="container">
+        <h2>Vendor Opportunities</h2>
+        <p>We are seeking local entrepreneurs and retailers to join our marketplace community. Available spaces include:</p>
+        <ul>
+            <li>Small retail booths</li>
+            <li>Vendor stalls for artisans and crafters</li>
+            <li>Product display areas</li>
+            <li>Flexible lease terms for new businesses</li>
+        </ul>
+    </section>
+
+    <section id="contact" class="container contact">
+        <h2>Interested in a Space?</h2>
+        <p>Location: 10 Court Street, New Castle, Kentucky</p>
+        <p>Email: info@thehenryllc.com (placeholder - replace with real email)</p>
+        <p>Phone: (123) 456-7890 (placeholder - replace with real number)</p>
+        <p>Contact us to inquire about available retail space.</p>
+        
+        <div class="cta-buttons">
+            <a href="mailto:info@thehenryllc.com?subject=Retail%20Space%20Inquiry" class="btn btn-primary">💼 Apply as Vendor</a>
+            <a href="tel:(123) 456-7890" class="btn btn-secondary">📞 Call for Details</a>
+            <a href="index.html" class="btn btn-tertiary">← Back to Home</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Services</h3>
+                    <ul>
+                        <li><a href="rooted-salon.html">Rooted Salon</a></li>
+                        <li><a href="fill-my-cup.html">Fill My Cup Cafe</a></li>
+                        <li><a href="market.html">Market</a></li>
+                        <li><a href="court-yard.html">The Court Yard</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Community</h3>
+                    <ul>
+                        <li><a href="index.html#about">About Us</a></li>
+                        <li><a href="index.html#featured-vendor">Featured</a></li>
+                        <li><a href="index.html#newsletter">Newsletter</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Connect</h3>
+                    <ul>
+                        <li><a href="social-media.html">Follow Us</a></li>
+                        <li><a href="mailto:info@thehenryllc.com">Email</a></li>
+                        <li><a href="tel:(123) 456-7890">Call</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 The Henry LLC. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="scripts/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fill My Cup Cafe - The Henry LLC</title>
+    <link rel="stylesheet" href="styles/styles.css">
+    <style>
+        .fill-my-cup-header {
+            background: #D2B48C !important;
+            font-family: "Brush Script MT", "Lucida Handwriting", cursive;
+        }
+        .fill-my-cup-header .site-title,
+        .fill-my-cup-header .site-subtitle {
+            color: #F5F5DC !important;
+            font-size: 2.5rem;
+            font-family: "Brush Script MT", "Lucida Handwriting", cursive;
+        }
+        
+        /* Fill My Cup Custom Styling */
+        .fmc-hero {
+            background: linear-gradient(135deg, rgba(210,180,140,0.9) 0%, rgba(230,210,180,0.9) 100%);
+            color: #3a3a3a;
+            padding: 40px 20px;
+            text-align: center;
+            margin: 30px auto;
+            border-radius: 12px;
+            max-width: 95%;
+        }
+        
+        .fmc-tagline {
+            font-family: "Brush Script MT", "Lucida Handwriting", cursive;
+            font-size: 1.8em;
+            color: #8B4513;
+            margin: 15px 0;
+        }
+        
+        .fmc-section {
+            background: white;
+            border-left: 5px solid #D2B48C;
+            padding: 30px;
+            margin: 25px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        
+        .fmc-section h3 {
+            color: #8B4513;
+            font-size: 1.5em;
+            margin-top: 0;
+        }
+        
+        .fmc-mission-highlight {
+            background: linear-gradient(to right, rgba(210,180,140,0.2), transparent);
+            padding: 20px;
+            border-left: 4px solid #8B4513;
+            font-style: italic;
+            color: #555;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        
+        .fmc-values {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .fmc-value-card {
+            background: #f9f6f2;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            border-top: 3px solid #D2B48C;
+        }
+        
+        .fmc-value-icon {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .fmc-value-card h4 {
+            color: #8B4513;
+            margin: 10px 0;
+        }
+        
+        .fmc-value-card p {
+            color: #5e5c5c;
+            font-size: 0.95em;
+            margin: 0;
+            line-height: 1.6;
+        }
+        
+        /* Photo Placeholders */
+        .photo-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        /* Ensure hamburger stays visible on mobile */
+        @media (max-width: 720px) {
+            .hamburger {
+                z-index: 9999 !important;
+            }
+            .sidebar {
+                z-index: 9998 !important;
+            }
+            .overlay {
+                z-index: 9997 !important;
+            }
+        }
+        
+        .photo-placeholder {
+            background: linear-gradient(135deg, #f0e6d2 0%, #e8dcc8 100%);
+            border: 3px dashed #D2B48C;
+            border-radius: 10px;
+            padding: 40px;
+            text-align: center;
+            min-height: 250px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .photo-placeholder:hover {
+            background: linear-gradient(135deg, #e8dcc8 0%, #e0d0bc 100%);
+            border-color: #8B4513;
+        }
+        
+        .photo-placeholder-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+        
+        .photo-placeholder p {
+            color: #999;
+            font-size: 0.95em;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Hamburger button -->
+    <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <!-- Sidebar navigation -->
+    <nav class="sidebar" id="sidebar">
+        <a href="admin-login.html">Home</a>
+        <a href="rooted-salon.html">Rooted Salon</a>
+        <a href="fill-my-cup.html">Fill My Cup Cafe</a>
+        <a href="market.html">Market</a>
+        <a href="court-yard.html">Court Yard</a>
+        <a href="events.html">Events</a>
+        <a href="admin-login.html#contact">Contact</a>
+    </nav>
+
+    <!-- Dark overlay -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Desktop navigation -->
+    <nav class="nav-desktop">
+        <ul>
+            <li><a href="admin-login.html">Home</a></li>
+            <li><a href="rooted-salon.html">Rooted Salon</a></li>
+            <li><a href="fill-my-cup.html">Fill My Cup Cafe</a></li>
+            <li><a href="market.html">Market</a></li>
+            <li><a href="court-yard.html">Court Yard</a></li>
+            <li><a href="events.html">Events</a></li>
+            <li><a href="admin-login.html#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <header class="fill-my-cup-header">
+        <div class="container header-inner">
+            <h1 class="site-title">Fill My Cup Cafe</h1>
+            <p class="site-subtitle">Faith-Based Counter Serivce Cafe</p>
+        </div>
+    </header>
+
+    <section id="about" class="container">
+        <h2>About Fill My Cup Cafe</h2>
+        
+        <div class="fmc-hero">
+            <p class="fmc-tagline">More Than Coffee. A Place of Connection.</p>
+            <p>Fill My Cup is a faith-based counter service coffee shop built on the principle of using quality coffee and genuine hospitality to transform lives and build community.</p>
+        </div>
+
+        <div class="fmc-section">
+            <h3>Our Story</h3>
+            <p>Established by Amy and Joshua Foree, Fill My Cup unites a love for exceptional coffee with a dedication to faith-inspired hospitality. We view coffee shops as welcoming spaces where genuine conversations flourish and lasting spiritual connections are nurtured.</p>
+            <p><strong>Coming April 2026</strong> to 10 Court Street, New Castle, Kentucky</p>
+        </div>
+    </section>
+
+    <section id="mission" class="container">
+        <h2>Our Mission</h2>
+        
+        <div class="fmc-mission-highlight">
+            "To serve our community through exceptional coffee, genuine hospitality, and faith-centered conversations that help people feel seen, known, and valued."
+        </div>
+
+        <div class="fmc-values">
+            <div class="fmc-value-card">
+                <div class="fmc-value-icon">☕</div>
+                <h4>Quality Coffee</h4>
+                <p>Carefully sourced and thoughtfully prepared to create moments of joy in your day.</p>
+            </div>
+            <div class="fmc-value-card">
+                <div class="fmc-value-icon">🤝</div>
+                <h4>Genuine Connection</h4>
+                <p>A space where people matter. Where conversations happen. Where relationships are built.</p>
+            </div>
+            <div class="fmc-value-card">
+                <div class="fmc-value-icon">✨</div>
+                <h4>Faith-Centered</h4>
+                <p>Rooted in spiritual values that guide how we treat each other and serve our community.</p>
+            </div>
+            <div class="fmc-value-card">
+                <div class="fmc-value-icon">💝</div>
+                <h4>Community Care</h4>
+                <p>Dedicated to supporting local causes and serving the people of Henry County.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="owners" class="container">
+        <h2>Meet the Founders</h2>
+        <p style="text-align: center; color: #666; margin-bottom: 30px;">Real people, real passion for connecting faith with community.</p>
+        
+        <div class="owner-card">
+            <img src="images/amy-foree.jpg" alt="Amy Foree" class="owner-photo">
+            <div>
+                <h3 style="color: #8B4513; margin-top: 0;">Amy Foree</h3>
+                <p><strong>Co-Founder & Visionary</strong></p>
+                <p>Amy brings a passion for community-centered business and a heart for faith-based hospitality. Her vision for Fill My Cup is creating a gathering space where people encounter genuine connection and spiritual transformation over a great cup of coffee.</p>
+            </div>
+        </div>
+
+        <div class="owner-card">
+            <img src="images/joshua-foree.jpg" alt="Joshua Foree" class="owner-photo">
+            <div>
+                <h3 style="color: #8B4513; margin-top: 0;">Joshua Foree</h3>
+                <p><strong>Co-Founder & Operator</strong></p>
+                <p>Joshua is the principal operator behind the day-to-day mission of Fill My Cup. His commitment to excellence and hospitality ensures that every customer experience reflects our values of care, quality, and community connection.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="gallery" class="container">
+        <h2>Gallery</h2>
+        <p style="text-align: center; color: #666; margin-bottom: 30px;">Photo placeholders - to be added as cafe opens and develops.</p>
+        
+        <div class="photo-gallery">
+            <div class="photo-placeholder">
+                <div class="photo-placeholder-icon">☕</div>
+                <p><strong>Coffee Preparation</strong></p>
+                <p>Photo placeholder for barista crafting specialty drinks</p>
+            </div>
+            
+            <div class="photo-placeholder">
+                <div class="photo-placeholder-icon">🤝</div>
+                <p><strong>Community Moments</strong></p>
+                <p>Photo placeholder for customer connections and gatherings</p>
+            </div>
+            
+            <div class="photo-placeholder">
+                <div class="photo-placeholder-icon">✨</div>
+                <p><strong>Interior Ambiance</strong></p>
+                <p>Photo placeholder for cafe seating and atmosphere</p>
+            </div>
+            
+            <div class="photo-placeholder">
+                <div class="photo-placeholder-icon">🏠</div>
+                <p><strong>Storefront</strong></p>
+                <p>Photo placeholder for exterior entrance and signage</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="container contact">
+        <h2>Get in Touch</h2>
+        <p>Location: 10 Court Street, New Castle, Kentucky</p>
+        <p>Email: info@thehenryllc.com (placeholder - replace with real email)</p>
+        <p>Phone: (123) 456-7890 (placeholder - replace with real number)</p>
+        
+        <div class="cta-buttons">
+            <a href="tel:(123) 456-7890" class="btn btn-primary">☕ Call for Hours</a>
+            <a href="mailto:info@thehenryllc.com" class="btn btn-secondary">📧 Email</a>
+            <a href="index.html" class="btn btn-tertiary">← Back to Home</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Services</h3>
+                    <ul>
+                        <li><a href="rooted-salon.html">Rooted Salon</a></li>
+                        <li><a href="fill-my-cup.html">Fill My Cup Cafe</a></li>
+                        <li><a href="market.html">Market</a></li>
+                        <li><a href="court-yard.html">The Court Yard</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Community</h3>
+                    <ul>
+                        <li><a href="index.html#about">About Us</a></li>
+                        <li><a href="index.html#featured-vendor">Featured</a></li>
+                        <li><a href="index.html#newsletter">Newsletter</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Connect</h3>
+                    <ul>
+                        <li><a href="social-media.html">Follow Us</a></li>
+                        <li><a href="mailto:info@thehenryllc.com">Email</a></li>
+                        <li><a href="tel:(123) 456-7890">Call</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 The Henry LLC. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="scripts/main.js"></script>
+</body>
+</html>

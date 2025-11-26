@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events - The Henry LLC</title>
+    <link rel="stylesheet" href="styles/styles.css">
+    <style>
+        .events-header {
+            background: linear-gradient(135deg, #9E1B32 0%, #2f8f55 100%);
+            color: white;
+        }
+        
+        /* Ensure hamburger stays visible on mobile */
+        @media (max-width: 720px) {
+            .hamburger {
+                z-index: 9999 !important;
+            }
+            .sidebar {
+                z-index: 9998 !important;
+            }
+            .overlay {
+                z-index: 9997 !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hamburger button -->
+    <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <!-- Sidebar navigation -->
+    <nav class="sidebar" id="sidebar">
+        <a href="admin-login.html">Home</a>
+        <a href="rooted-salon.html">Rooted Salon</a>
+        <a href="fill-my-cup.html">Fill My Cup Cafe</a>
+        <a href="market.html">Market</a>
+        <a href="court-yard.html">Court Yard</a>
+        <a href="events.html">Events</a>
+        <a href="admin-login.html#contact">Contact</a>
+    </nav>
+
+    <!-- Dark overlay -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Desktop navigation -->
+    <nav class="nav-desktop">
+        <ul>
+            <li><a href="admin-login.html">Home</a></li>
+            <li><a href="rooted-salon.html">Rooted Salon</a></li>
+            <li><a href="fill-my-cup.html">Fill My Cup Cafe</a></li>
+            <li><a href="market.html">Market</a></li>
+            <li><a href="court-yard.html">Court Yard</a></li>
+            <li><a href="events.html">Events</a></li>
+            <li><a href="admin-login.html#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <header class="events-header">
+        <div class="container header-inner">
+            <h1 class="site-title">Community Events</h1>
+            <p class="site-subtitle">Workshops, Grand Openings & Local Gatherings</p>
+        </div>
+    </header>
+
+    <section id="about" class="container">
+        <h2>What's Happening at The Henry</h2>
+        <p>The Henry LLC is committed to building community connection through events, workshops, and gatherings. Whether you're interested in learning new skills, celebrating local entrepreneurs, or simply connecting with neighbors, we have something for you.</p>
+    </section>
+
+    <section id="upcoming-events" class="container">
+        <h2>Upcoming Events</h2>
+        
+        <div class="events-list">
+            <!-- Event 1 -->
+            <div class="event-card">
+                <div class="event-date">
+                    <span class="event-month">April</span>
+                    <span class="event-day">15</span>
+                </div>
+                <div class="event-details">
+                    <h3>🎉 Rooted Salon Grand Opening</h3>
+                    <p><strong>Time:</strong> 10:00 AM - 4:00 PM</p>
+                    <p><strong>Location:</strong> 10 Court Street, New Castle, KY</p>
+                    <p>Join us for the official opening of Rooted Salon! Meet Amy Foree and Karen Gilliland-White, enjoy refreshments, and receive a special opening day discount on your first appointment.</p>
+                    <a href="rooted-salon.html" class="btn btn-secondary">Learn More</a>
+                </div>
+            </div>
+
+            <!-- Event 2 -->
+            <div class="event-card">
+                <div class="event-date">
+                    <span class="event-month">May</span>
+                    <span class="event-day">3</span>
+                </div>
+                <div class="event-details">
+                    <h3>☕ Fill My Cup Cafe Soft Opening</h3>
+                    <p><strong>Time:</strong> 7:00 AM - 12:00 PM</p>
+                    <p><strong>Location:</strong> 10 Court Street, New Castle, KY</p>
+                    <p>Experience the warmth and hospitality of Fill My Cup Cafe. Sample our signature coffee blends and faith-centered hospitality. Perfect for morning coffee lovers!</p>
+                    <a href="fill-my-cup.html" class="btn btn-secondary">Learn More</a>
+                </div>
+            </div>
+
+            <!-- Event 3 -->
+            <div class="event-card">
+                <div class="event-date">
+                    <span class="event-month">May</span>
+                    <span class="event-day">17</span>
+                </div>
+                <div class="event-details">
+                    <h3>🛍️ Local Vendors Marketplace Opening</h3>
+                    <p><strong>Time:</strong> 11:00 AM - 6:00 PM</p>
+                    <p><strong>Location:</strong> 10 Court Street, New Castle, KY</p>
+                    <p>Discover local artisans and vendors! Shop handmade goods, support local businesses, and meet the creative entrepreneurs transforming Main Street.</p>
+                    <a href="market.html" class="btn btn-secondary">Learn More</a>
+                </div>
+            </div>
+
+            <!-- Event 4 -->
+            <div class="event-card">
+                <div class="event-date">
+                    <span class="event-month">June</span>
+                    <span class="event-day">7</span>
+                </div>
+                <div class="event-details">
+                    <h3>💼 Entrepreneur Networking Breakfast</h3>
+                    <p><strong>Time:</strong> 8:00 AM - 9:30 AM</p>
+                    <p><strong>Location:</strong> The Court Yard, 10 Court Street</p>
+                    <p>Connect with fellow entrepreneurs and business owners over coffee and breakfast. Build relationships and discover collaboration opportunities in our rural business community.</p>
+                    <a href="court-yard.html" class="btn btn-secondary">Register</a>
+                </div>
+            </div>
+
+            <!-- Event 5 -->
+            <div class="event-card">
+                <div class="event-date">
+                    <span class="event-month">June</span>
+                    <span class="event-day">21</span>
+                </div>
+                <div class="event-details">
+                    <h3>🎨 Artist Workshop: Local Crafts & Skills</h3>
+                    <p><strong>Time:</strong> 2:00 PM - 5:00 PM</p>
+                    <p><strong>Location:</strong> The Court Yard Community Space</p>
+                    <p>Learn a new creative skill from local artisans! Rotating workshops featuring different crafts each month. Perfect for all skill levels.</p>
+                    <div class="cta-buttons">
+                        <a href="mailto:info@thehenryllc.com?subject=Workshop%20Interest" class="btn btn-secondary">Express Interest</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="event-calendar" class="container">
+        <h2>Full Event Calendar</h2>
+        <p>Want to stay updated on all community events? <a href="index.html#newsletter">Subscribe to our newsletter</a> for monthly event announcements and special offers!</p>
+        
+        <div class="calendar-info">
+            <p>📅 Events are held regularly throughout the year. Check back frequently for new additions or contact us for details about hosting your own event at The Henry.</p>
+        </div>
+    </section>
+
+    <section id="host-event" class="container host-event">
+        <h2>Host an Event with Us</h2>
+        <p>Interested in hosting a private event, workshop, or gathering at The Henry? We offer flexible space rental for community organizations, businesses, and special occasions.</p>
+        
+        <div class="cta-buttons">
+            <a href="mailto:info@thehenryllc.com?subject=Event%20Space%20Rental%20Inquiry" class="btn btn-primary">📧 Inquire About Event Space</a>
+            <a href="tel:(123) 456-7890" class="btn btn-secondary">📞 Call for Details</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Services</h3>
+                    <ul>
+                        <li><a href="rooted-salon.html">Rooted Salon</a></li>
+                        <li><a href="fill-my-cup.html">Fill My Cup Cafe</a></li>
+                        <li><a href="market.html">Market</a></li>
+                        <li><a href="court-yard.html">The Court Yard</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Community</h3>
+                    <ul>
+                        <li><a href="index.html#about">About Us</a></li>
+                        <li><a href="index.html#featured-vendor">Featured</a></li>
+                        <li><a href="events.html">Events</a></li>
+                        <li><a href="index.html#newsletter">Newsletter</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Connect</h3>
+                    <ul>
+                        <li><a href="social-media.html">Follow Us</a></li>
+                        <li><a href="mailto:info@thehenryllc.com">Email</a></li>
+                        <li><a href="tel:(123) 456-7890">Call</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 The Henry LLC. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="scripts/main.js"></script>
+</body>
+</html>

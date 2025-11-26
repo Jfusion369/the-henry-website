@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Henry LLC - Revitalizing Rural Main Street</title>
+    <link rel="stylesheet" href="styles/styles.css">
+    <style>
+        .henry-header-title {
+            font-family: "Georgia", "Garamond", serif;
+            font-weight: bold;
+            letter-spacing: 2px,4px;
+        }
+        
+        /* Henry LLC Custom Styling */
+        .henry-hero {
+            background: linear-gradient(135deg, rgba(158, 27, 50, 0.9) 0%, rgba(47, 143, 85, 0.9) 100%);
+            color: #f5f5f5;
+            padding: 40px 20px;
+            text-align: center;
+            margin: 30px auto;
+            border-radius: 12px;
+            max-width: 95%;
+            display: block;
+            width: 100%;
+        }
+        
+        .henry-tagline {
+            font-family: "Georgia", "Garamond", serif;
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #f5f5f5;
+            margin: 15px 0;
+            display: block;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+        
+        .henry-section {
+            background: white;
+            border-left: 5px solid #9E1B32;
+            padding: 30px;
+            margin: 25px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            display: block;
+            width: 100%;
+        }
+        
+        .henry-section h3 {
+            color: #9E1B32;
+            font-size: 1.5em;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+        
+        .henry-section p {
+            color: #333;
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+        
+        /* Ensure hamburger stays visible on mobile */
+        @media (max-width: 720px) {
+            .hamburger {
+                z-index: 9999 !important;
+            }
+            .sidebar {
+                z-index: 9998 !important;
+            }
+            .overlay {
+                z-index: 9997 !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hamburger button -->
+    <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <!-- Sidebar navigation -->
+    <nav class="sidebar" id="sidebar">
+        <a href="admin-login.html">Home</a>
+        <a href="rooted-salon.html">Rooted Salon</a>
+        <a href="fill-my-cup.html">Fill My Cup Cafe</a>
+        <a href="market.html">Market</a>
+        <a href="court-yard.html">Court Yard</a>
+        <a href="events.html">Events</a>
+        <a href="admin-login.html#contact">Contact</a>
+    </nav>
+
+    <!-- Dark overlay -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Desktop navigation -->
+    <nav class="nav-desktop">
+        <ul>
+            <li><a href="admin-login.html">Home</a></li>
+            <li><a href="rooted-salon.html">Rooted Salon</a></li>
+            <li><a href="fill-my-cup.html">Fill My Cup Cafe</a></li>
+            <li><a href="market.html">Market</a></li>
+            <li><a href="court-yard.html">Court Yard</a></li>
+            <li><a href="events.html">Events</a></li>
+            <li><a href="admin-login.html#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <header>
+        <div class="container header-inner">
+            <h1 class="site-title henry-header-title">The Henry LLC</h1>
+            <p class="site-subtitle">Revitalizing and Bolstering Rural Main Street in Henry County, Kentucky</p>
+        </div>
+    </header>
+
+    <section id="about" class="container animate-in">
+        <h2>About Us</h2>
+        
+        <div class="henry-hero">
+            <p class="henry-tagline">Revitalizing Rural Main Street with Purpose & Community</p>
+        </div>
+        
+        <div class="henry-section">
+            <h3>Our Vision</h3>
+            <p>The Henry LLC is a visionary company located at 10 Court Street in New Castle, Kentucky. This 5,500 square foot commercial space will house a coffee shop, hair salon, and a multi-vendor marketplace. Additional service offerings include office space for local entrepreneurs.</p>
+            <p><strong>Principal owners:</strong> Amy Foree and Joshua Foree | <strong>Proposed opening date:</strong> April 2026</p>
+            <p><strong>Primary sources of revenue:</strong> Retail space rental, office space rental, and vendor space rental. We plan to open in three phases.</p>
+        </div>
+    </section>
+
+    <section id="phases" class="container">
+        <h2>Business  Plan</h2>
+        <div class="table-wrap">
+        <table>
+            <tr>
+                <th>Business</th>
+                <th>Business Description</th>
+                <th>Proposed Opening Date</th>
+            </tr>
+            <tr>
+                <td><a href="rooted-salon.html" class="phase-link">Rooted Salon </a></td>
+                <td>Rooted Salon LLC - A full-service hair salon owned and operated by Amy Fore and Karen Gilliland-White. An established and experienced team serves as primary revenue generator.</td>
+                <td>April 2026</td>
+            </tr>
+            <tr>
+                <td><a href="fill-my-cup.html" class="phase-link">Fill My Cup Cafe</a></td>
+                <td>Fill My Cup Cafe - A faith-based business that uses a counter service coffee shop concept to help transform lives. Amy and Joshua will own and operate this business.</td>
+                <td>TBD</td>
+            </tr>
+             <tr>
+                <td><a href="market.html" class="phase-link"> Market</a></td>
+                <td>Market @ The Henry, we celebrate the heart of our community by bringing together the very best of Henry, Oldham, Shelby, and Trimble counties. From fresh organic produce grown from local Farms to farm-raised meats and handcrafted local goods, every item is chosen with care to bring both flavor and meaning to your table.
+                           Our rural marketplace is more than a place to shop,it's a gathering spot where neighbors connect, stories are shared, and everyday living is made easier. With wholesome prepared foods, extraordinary groceries, and genuine service, we aim to make your daily routine feel effortless and joyful.
+                        Anchored in quality, variety, and sustainability, Market @ The Henry is designed to elevate simple moments into memorable experiences. Whether you’re picking up dinner, planning a family gathering, or just stopping by to see a familiar face, we’re here to make each visit feel like home..
+                    </td>
+                <td>TBD</td>
+            </tr>
+            <tr>
+                <td><a href="court-yard.html" class="phase-link">The Court Yard</a></td>
+                <td>The Court Yard - A multi-vendor marketplace that provides office space for local entrepreneurs and booth space for local creatives, artisans, and artists.</td>
+                <td>TBD</td>
+            </tr>
+        </table>
+        </div>
+    </section>
+
+    <section id="featured-vendor" class="container featured-vendor">
+        <h2>Featured This Month</h2>
+        <div class="featured-card">
+            <div class="featured-image">
+                🎨
+            </div>
+            <h3>Rooted Salon LLC</h3>
+            <p class="featured-tagline">Full-Service Hair Salon</p>
+            <p>Discover professional hair care services from experienced stylists Amy Foree and Karen Gilliland-White. Rooted Salon brings quality and expertise to New Castle, opening April 2026.</p>
+            <a href="rooted-salon.html" class="btn btn-secondary">Learn More</a>
+        </div>
+    </section>
+
+    <section id="newsletter" class="container newsletter">
+        <h2>Join Our Community</h2>
+        <p>Subscribe to our newsletter for exclusive updates, events, and special offers from The Henry LLC and our tenant businesses.</p>
+        
+        <form id="newsletter-form" class="newsletter-form">
+            <input 
+                type="email" 
+                id="newsletter-email" 
+                name="email" 
+                placeholder="Enter your email address" 
+                required
+                aria-label="Email address"
+            >
+            <button type="submit" class="btn btn-primary">Subscribe</button>
+        </form>
+        <div id="newsletter-message" class="newsletter-message"></div>
+    </section>
+
+    <section id="contact" class="container contact">
+        <h2>Contact Us</h2>
+        <p>Location: 10 Court Street, New Castle, Kentucky</p>
+        <p>Owners: Amy Foree and Joshua Foree</p>
+        <p>Email: info@thehenryllc.com (placeholder - replace with real email)</p>
+        <p>Phone: (123) 456-7890 (placeholder - replace with real number)</p>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <!-- Services Section -->
+                <div class="footer-section">
+                    <h3>Services</h3>
+                    <ul>
+                        <li><a href="rooted-salon.html">Rooted Salon</a></li>
+                        <li><a href="fill-my-cup.html">Fill My Cup Cafe</a></li>
+                        <li><a href="market.html">Market</a></li>
+                        <li><a href="court-yard.html">The Court Yard</a></li>
+                    </ul>
+                </div>
+
+                <!-- Community Section -->
+                <div class="footer-section">
+                    <h3>Community</h3>
+                    <ul>
+                        <li><a href="admin-login.html#about">About Us</a></li>
+                        <li><a href="admin-login.html#featured-vendor">Featured This Month</a></li>
+                        <li><a href="events.html">Events</a></li>
+                        <li><a href="admin-login.html#newsletter">Newsletter</a></li>
+                    </ul>
+                </div>
+
+                <!-- Connect Section -->
+                <div class="footer-section">
+                    <h3>Connect</h3>
+                    <ul>
+                        <li><a href="social-media.html">Follow Us</a></li>
+                        <li><a href="mailto:info@thehenryllc.com">Email Us</a></li>
+                        <li><a href="tel:(123) 456-7890">Call Us</a></li>
+                        <li><a href="admin-login.html#contact">Contact Info</a></li>
+                    </ul>
+                </div>
+
+                <!-- Location Section -->
+                <div class="footer-section">
+                    <h3>Location</h3>
+                    <p style="margin: 0; line-height: 1.8; color: #ddd;">
+                        The Henry LLC<br>
+                        10 Court Street<br>
+                        New Castle, Kentucky<br>
+                        <br>
+                        <a href="tel:(123) 456-7890" style="color: #9E1B32; font-weight: 600;">(123) 456-7890</a>
+                    </p>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 The Henry LLC. All rights reserved.</p>
+                <p style="margin-top: 10px; font-size: 0.85em;">
+                    <a href="#" style="color: #999;">Privacy Policy</a> • 
+                    <a href="#" style="color: #999;">Terms of Service</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="scripts/main.js"></script>
+</body>
+</html>
