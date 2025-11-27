@@ -250,20 +250,20 @@
 
     <section id="contact" class="container contact">
         <h2>Contact Us</h2>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin: 30px 0;">
+        <div class="contact-grid">
             <!-- Contact Information -->
             <div>
-                <h3 style="margin-bottom: 20px;">Get In Touch</h3>
+                <h3 class="contact-heading">Get In Touch</h3>
                 <p><strong>Location:</strong> 10 Court Street, New Castle, Kentucky</p>
                 <p><strong>Owners:</strong> Amy Foree and Joshua Foree</p>
                 <p><strong>Email:</strong> <a href="mailto:admin@thehenryllc.com">admin@thehenryllc.com</a></p>
                 <p><strong>Phone:</strong> <a href="tel:(123)456-7890">(123) 456-7890</a></p>
-                <p style="margin-top: 20px; font-size: 14px; color: #666;">Hours: Monday - Friday, 9 AM - 5 PM</p>
+                <p class="contact-hours">Hours: Monday - Friday, 9 AM - 5 PM</p>
             </div>
             
             <!-- Contact Form -->
             <div>
-                <h3 style="margin-bottom: 20px;">Send us a Message</h3>
+                <h3 class="contact-heading">Send us a Message</h3>
                 <form id="contactForm">
                     <div class="form-group">
                         <label for="contactName">Name *</label>
@@ -279,7 +279,7 @@
                     </div>
                     <div class="form-group">
                         <label for="contactSubject">Subject</label>
-                        <input type="text" id="contactSubject" name="subject" placeholder="What is this about?">
+                        <input type="text" id="contactSubject" name="subject" placeholder="What is this about?" autocomplete="off">
                     </div>
                     <div class="form-group">
                         <label for="contactMessage">Message *</label>
@@ -290,11 +290,23 @@
             </div>
         </div>
         <style>
-            @media (max-width: 768px) {
-                #contact > div {
-                    grid-template-columns: 1fr !important;
-                }
+            .contact-grid {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 40px;
+                margin: 30px 0;
             }
+            
+            .contact-heading {
+                margin-bottom: 20px;
+            }
+            
+            .contact-hours {
+                margin-top: 20px;
+                font-size: 14px;
+                color: #666;
+            }
+            
             #contactForm textarea,
             .contact-textarea {
                 width: 100%;
@@ -303,6 +315,12 @@
                 min-height: 120px;
                 font-family: inherit;
                 padding: 10px;
+            }
+            
+            @media (max-width: 768px) {
+                .contact-grid {
+                    grid-template-columns: 1fr !important;
+                }
             }
         </style>
     </section>
@@ -385,25 +403,47 @@
                 <!-- Location Section -->
                 <div class="footer-section">
                     <h3>Location</h3>
-                    <p style="margin: 0; line-height: 1.8; color: #ddd;">
+                    <p class="footer-location">
                         The Henry LLC<br>
                         10 Court Street<br>
                         New Castle, Kentucky<br>
                         <br>
-                        <a href="tel:(123) 456-7890" style="color: #9E1B32; font-weight: 600;">(123) 456-7890</a>
+                        <a href="tel:(123) 456-7890" class="footer-phone">(123) 456-7890</a>
                     </p>
                 </div>
             </div>
 
             <div class="footer-bottom">
                 <p>&copy; 2025 The Henry LLC. All rights reserved.</p>
-                <p style="margin-top: 10px; font-size: 0.85em;">
-                    <a href="#" style="color: #999;">Privacy Policy</a> • 
-                    <a href="#" style="color: #999;">Terms of Service</a>
+                <p class="footer-links">
+                    <a href="#" class="footer-link">Privacy Policy</a> • 
+                    <a href="#" class="footer-link">Terms of Service</a>
                 </p>
             </div>
         </div>
     </footer>
+    
+    <style>
+        .footer-location {
+            margin: 0;
+            line-height: 1.8;
+            color: #ddd;
+        }
+        
+        .footer-phone {
+            color: #9E1B32;
+            font-weight: 600;
+        }
+        
+        .footer-links {
+            margin-top: 10px;
+            font-size: 0.85em;
+        }
+        
+        .footer-link {
+            color: #999;
+        }
+    </style>
 
     <script src="scripts/main.js"></script>
     <script>
