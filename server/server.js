@@ -24,18 +24,24 @@ app.use(helmet({
 
 // Cache and security headers MUST come before everything
 app.use((req, res, next) => {
-    // Ensure X-Content-Type-Options is always set
+    // Always set X-Content-Type-Options
     res.setHeader('X-Content-Type-Options', 'nosniff');
     
     // API endpoints: no caching
     if (req.path.startsWith('/api')) {
-        res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0');
+        res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0');
+        res.setHeader('Pragma', 'no-cache');
+        res.setHeader('Expires', '0');
     } 
-    // Static assets: cache for 1 year
-    else if (req.path.match(/\.(js|css|woff|woff2|ttf|eot|png|jpg|jpeg|gif|svg)$/i)) {
+    // Static assets (js, css, fonts, images): cache for 1 year with strong etag
+    else if (req.path.match(/\.(js|css|woff|woff2|ttf|eot|png|jpg|jpeg|gif|svg|ico)$/i)) {
         res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
     } 
-    // HTML and everything else: 1 hour cache with revalidation
+    // HTML files: 1 day cache with revalidation via ETag
+    else if (req.path.match(/\.html$/i) || req.path === '/' || !req.path.includes('.')) {
+        res.setHeader('Cache-Control', 'public, max-age=86400, must-revalidate');
+    }
+    // Default: 1 hour cache
     else {
         res.setHeader('Cache-Control', 'public, max-age=3600, must-revalidate');
     }
@@ -50,15 +56,21 @@ app.use(cors({
 app.use(bodyParser.json({ limit: '10mb' }));
 app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
 
-// Static files - serve the frontend
+// Static files - serve the frontend with proper headers
 app.use(express.static(path.join(__dirname, '../'), {
+    etag: true,
+    lastModified: true,
     setHeaders: (res, filepath) => {
-        // Ensure headers are set for static files too
+        // Always set X-Content-Type-Options
         res.setHeader('X-Content-Type-Options', 'nosniff');
-        if (filepath.match(/\.(js|css|woff|woff2|ttf|eot|png|jpg|jpeg|gif|svg)$/i)) {
+        
+        // Cache strategies per file type
+        if (filepath.match(/\.(js|css|woff|woff2|ttf|eot|png|jpg|jpeg|gif|svg|ico)$/i)) {
+            // Long-term cache for assets
             res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
         } else {
-            res.setHeader('Cache-Control', 'public, max-age=3600, must-revalidate');
+            // HTML and other files: 1 day with revalidation
+            res.setHeader('Cache-Control', 'public, max-age=86400, must-revalidate');
         }
     }
 }));
