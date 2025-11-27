@@ -847,6 +847,42 @@ footer .container {
     line-height: 1.7;
 }
 
+/* ===== NOTIFICATION ANIMATIONS ===== */
+
+@keyframes slideInDown {
+    from {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOutUp {
+    from {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+}
+
+.notification {
+    animation: slideInDown 0.3s ease-out !important;
+}
+
+.notification-success {
+    background: #2f8f55 !important;
+}
+
+.notification-error {
+    background: #d32f2f !important;
+}
+
 @media (max-width: 720px) {
     .event-card {
         flex-direction: column;
@@ -865,5 +901,11 @@ footer .container {
     
     .event-details h3 {
         font-size: 1.2em;
+    }
+    
+    .notification {
+        right: 10px !important;
+        left: 10px !important;
+        max-width: calc(100% - 20px) !important;
     }
 }
