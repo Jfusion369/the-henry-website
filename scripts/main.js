@@ -121,45 +121,137 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   });
 });
 
+/* ===== API CONFIGURATION ===== */
+
+const API_URL = window.location.hostname === 'localhost' 
+  ? 'http://localhost:3000/api'
+  : '/api';
+
+/* ===== CONTACT FORM ===== */
+
+const contactForm = document.getElementById('contactForm');
+if (contactForm) {
+  contactForm.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const submitButton = this.querySelector('button[type="submit"]');
+    const originalButtonText = submitButton.textContent;
+    
+    try {
+      submitButton.disabled = true;
+      submitButton.textContent = 'Sending...';
+      
+      const formData = {
+        name: document.getElementById('contactName').value,
+        email: document.getElementById('contactEmail').value,
+        phone: document.getElementById('contactPhone').value || '',
+        subject: document.getElementById('contactSubject').value || '',
+        message: document.getElementById('contactMessage').value
+      };
+      
+      const response = await fetch(`${API_URL}/contact`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      });
+      
+      const data = await response.json();
+      
+      if (data.success) {
+        showNotification('Thank you! Your message has been sent successfully.', 'success');
+        contactForm.reset();
+      } else {
+        showNotification(data.message || 'Error sending message. Please try again.', 'error');
+      }
+    } catch (error) {
+      console.error('Contact form error:', error);
+      showNotification('Error sending message. Please try again or contact us directly.', 'error');
+    } finally {
+      submitButton.disabled = false;
+      submitButton.textContent = originalButtonText;
+    }
+  });
+}
+
 /* ===== NEWSLETTER FORM ===== */
 
 const newsletterForm = document.getElementById('newsletter-form');
 if (newsletterForm) {
-  newsletterForm.addEventListener('submit', function(e) {
+  newsletterForm.addEventListener('submit', async function(e) {
     e.preventDefault();
     
     const email = document.getElementById('newsletter-email').value;
     const messageDiv = document.getElementById('newsletter-message');
+    const submitButton = this.querySelector('button[type="submit"]');
+    const originalButtonText = submitButton.textContent;
     
-    // Simple email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    
-    if (!emailRegex.test(email)) {
-      messageDiv.textContent = 'Please enter a valid email address.';
+    try {
+      submitButton.disabled = true;
+      submitButton.textContent = 'Subscribing...';
+      
+      const response = await fetch(`${API_URL}/newsletter/subscribe`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email })
+      });
+      
+      const data = await response.json();
+      
+      if (data.success) {
+        messageDiv.textContent = '✓ Thanks for subscribing! Check your email for confirmation.';
+        messageDiv.className = 'newsletter-message success';
+        newsletterForm.reset();
+        
+        setTimeout(() => {
+          messageDiv.textContent = '';
+          messageDiv.className = '';
+        }, 5000);
+      } else {
+        messageDiv.textContent = data.message || 'Error subscribing. Please try again.';
+        messageDiv.className = 'newsletter-message error';
+      }
+    } catch (error) {
+      console.error('Newsletter subscription error:', error);
+      messageDiv.textContent = 'Error subscribing. Please try again later.';
       messageDiv.className = 'newsletter-message error';
-      return;
+    } finally {
+      submitButton.disabled = false;
+      submitButton.textContent = originalButtonText;
     }
-    
-    // Store email in localStorage (for future CMS integration)
-    let subscribers = JSON.parse(localStorage.getItem('newsletter-subscribers')) || [];
-    if (!subscribers.includes(email)) {
-      subscribers.push(email);
-      localStorage.setItem('newsletter-subscribers', JSON.stringify(subscribers));
-    }
-    
-    // Show success message
-    messageDiv.textContent = '✓ Thanks for subscribing! Check your email for confirmation.';
-    messageDiv.className = 'newsletter-message success';
-    
-    // Reset form
-    newsletterForm.reset();
-    
-    // Clear message after 5 seconds
-    setTimeout(() => {
-      messageDiv.textContent = '';
-      messageDiv.className = '';
-    }, 5000);
   });
+}
+
+/* ===== NOTIFICATION HELPER ===== */
+
+function showNotification(message, type = 'success') {
+  const notificationDiv = document.createElement('div');
+  notificationDiv.className = `notification notification-${type}`;
+  notificationDiv.textContent = message;
+  notificationDiv.style.cssText = `
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: ${type === 'success' ? '#2f8f55' : '#d32f2f'};
+    color: white;
+    padding: 15px 25px;
+    border-radius: 8px;
+    font-weight: 600;
+    z-index: 10000;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    animation: slideInDown 0.3s ease-out;
+    max-width: 90%;
+  `;
+  
+  document.body.appendChild(notificationDiv);
+  
+  setTimeout(() => {
+    notificationDiv.style.animation = 'slideOutUp 0.3s ease-out';
+    setTimeout(() => notificationDiv.remove(), 300);
+  }, 4000);
 }
 
 /* ===== CTA BUTTON CALL REMINDER ===== */
