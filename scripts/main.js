@@ -123,13 +123,14 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 
 /* ===== API CONFIGURATION ===== */
 
-const API_URL = window.location.hostname === 'localhost' 
+const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
   ? 'http://localhost:3000/api'
   : '/api';
 
 console.log('🔧 API_URL configured:', API_URL);
 console.log('📍 Current hostname:', window.location.hostname);
 console.log('📍 Current origin:', window.location.origin);
+console.log('🌐 Using backend:', window.location.hostname === 'localhost' ? 'LOCAL (localhost:3000)' : 'PRODUCTION (/api)');
 
 /* ===== CONTACT FORM ===== */
 
