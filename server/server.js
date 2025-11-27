@@ -21,6 +21,15 @@ app.use(helmet({
     noSniff: true,
     referrerPolicy: { policy: 'strict-origin-when-cross-origin' }
 }));
+app.use(cors({
+    origin: ['http://localhost', 'http://localhost:3000', 'http://localhost:8080', 'http://localhost:5500'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));
+app.use(bodyParser.json({ limit: '10mb' }));
+app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
+
+// Cache and security headers middleware - MUST be before static files
 app.use((req, res, next) => {
     // API endpoints: no caching
     if (req.path.startsWith('/api')) {
@@ -36,13 +45,6 @@ app.use((req, res, next) => {
     }
     next();
 });
-app.use(cors({
-    origin: ['http://localhost', 'http://localhost:3000', 'http://localhost:8080', 'http://localhost:5500'],
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization']
-}));
-app.use(bodyParser.json({ limit: '10mb' }));
-app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
 
 // Static files - serve the frontend
 app.use(express.static(path.join(__dirname, '../')));
