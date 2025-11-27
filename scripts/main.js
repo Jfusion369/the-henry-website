@@ -127,12 +127,19 @@ const API_URL = window.location.hostname === 'localhost'
   ? 'http://localhost:3000/api'
   : '/api';
 
+console.log('🔧 API_URL configured:', API_URL);
+console.log('📍 Current hostname:', window.location.hostname);
+console.log('📍 Current origin:', window.location.origin);
+
 /* ===== CONTACT FORM ===== */
 
 const contactForm = document.getElementById('contactForm');
 if (contactForm) {
+  console.log('✅ Contact form found');
   contactForm.addEventListener('submit', async function(e) {
     e.preventDefault();
+    
+    console.log('📝 Contact form submitted');
     
     const submitButton = this.querySelector('button[type="submit"]');
     const originalButtonText = submitButton.textContent;
@@ -149,6 +156,9 @@ if (contactForm) {
         message: document.getElementById('contactMessage').value
       };
       
+      console.log('📤 Sending data to:', `${API_URL}/contact`);
+      console.log('📋 Form data:', formData);
+      
       const response = await fetch(`${API_URL}/contact`, {
         method: 'POST',
         headers: {
@@ -157,9 +167,14 @@ if (contactForm) {
         body: JSON.stringify(formData)
       });
       
+      console.log('📬 Response received:', response.status, response.statusText);
+      
       const data = await response.json();
       
+      console.log('📦 Response data:', data);
+      
       if (response.ok && data.success) {
+        console.log('✅ Success!');
         showNotification('Thank you! Your message has been sent successfully.', 'success');
         contactForm.reset();
       } else {
@@ -168,7 +183,8 @@ if (contactForm) {
         showNotification(errorMsg, 'error');
       }
     } catch (error) {
-      console.error('Contact form error:', error);
+      console.error('❌ Contact form error:', error);
+      console.error('Error stack:', error.stack);
       showNotification('Error sending message. Please try again or contact us directly.', 'error');
     } finally {
       submitButton.disabled = false;

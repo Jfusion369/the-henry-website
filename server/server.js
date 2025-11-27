@@ -24,6 +24,8 @@ app.use(helmet({
 
 // Cache and security headers MUST come before everything
 app.use((req, res, next) => {
+    console.log(`📨 ${req.method} ${req.path}`);
+    
     // Always set X-Content-Type-Options
     res.setHeader('X-Content-Type-Options', 'nosniff');
     
@@ -49,9 +51,26 @@ app.use((req, res, next) => {
 });
 
 app.use(cors({
-    origin: ['http://localhost', 'http://localhost:3000', 'http://localhost:8080', 'http://localhost:5500'],
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization']
+    origin: function(origin, callback) {
+        // Allow requests with no origin (like mobile apps or curl requests)
+        if (!origin) return callback(null, true);
+        
+        // Allow all localhost origins in development
+        if (origin.includes('localhost') || origin.includes('127.0.0.1')) {
+            return callback(null, true);
+        }
+        
+        // Allow the production domain when deployed
+        if (origin === 'https://thehenryllc.com' || origin === 'https://www.thehenryllc.com') {
+            return callback(null, true);
+        }
+        
+        // Deny everything else
+        callback(new Error('Not allowed by CORS'));
+    },
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true
 }));
 app.use(bodyParser.json({ limit: '10mb' }));
 app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
