@@ -14,7 +14,20 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Middleware
-app.use(helmet());
+app.use(helmet({
+    contentSecurityPolicy: false,
+    frameguard: { action: 'SAMEORIGIN' },
+    xssFilter: true,
+    noSniff: true,
+    referrerPolicy: { policy: 'strict-origin-when-cross-origin' }
+}));
+app.use((req, res, next) => {
+    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+    res.setHeader('Pragma', 'no-cache');
+    res.setHeader('Expires', '0');
+    res.setHeader('X-Content-Type-Options', 'nosniff');
+    next();
+});
 app.use(cors({
     origin: ['http://localhost', 'http://localhost:3000', 'http://localhost:8080', 'http://localhost:5500'],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
