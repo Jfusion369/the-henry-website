@@ -22,9 +22,13 @@ app.use(helmet({
     referrerPolicy: { policy: 'strict-origin-when-cross-origin' }
 }));
 app.use((req, res, next) => {
-    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
-    res.setHeader('Pragma', 'no-cache');
-    res.setHeader('Expires', '0');
+    // API endpoints: no caching
+    if (req.path.startsWith('/api')) {
+        res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0');
+    } else {
+        // Static assets: cache for 1 year
+        res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+    }
     res.setHeader('X-Content-Type-Options', 'nosniff');
     next();
 });
