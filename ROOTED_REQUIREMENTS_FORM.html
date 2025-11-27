@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ROOTED Salon Backend Requirements - Questionnaire</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 8.5in;
+            background: white;
+            margin: 0 auto;
+            padding: 40px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        
+        .header {
+            text-align: center;
+            border-bottom: 3px solid #8B4789;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            font-size: 28px;
+            color: #8B4789;
+            margin-bottom: 5px;
+        }
+        
+        .header p {
+            color: #666;
+            font-size: 12px;
+        }
+        
+        .section {
+            margin-bottom: 30px;
+            page-break-inside: avoid;
+        }
+        
+        .section-title {
+            background: #8B4789;
+            color: white;
+            padding: 10px 15px;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            border-radius: 3px;
+        }
+        
+        .subsection {
+            margin-bottom: 15px;
+            margin-left: 15px;
+        }
+        
+        .subsection-title {
+            font-weight: bold;
+            color: #8B4789;
+            font-size: 12px;
+            margin-bottom: 8px;
+        }
+        
+        .question {
+            margin-bottom: 10px;
+            font-size: 11px;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .checkbox {
+            width: 18px;
+            height: 18px;
+            border: 1px solid #999;
+            margin-right: 10px;
+            margin-top: 2px;
+            flex-shrink: 0;
+            display: inline-block;
+        }
+        
+        .question-text {
+            flex: 1;
+        }
+        
+        .answer-line {
+            border-bottom: 1px dotted #ccc;
+            height: 20px;
+            margin: 15px 0;
+            font-size: 10px;
+            color: #999;
+        }
+        
+        .footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #ccc;
+            font-size: 10px;
+            color: #666;
+            text-align: center;
+        }
+        
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .container {
+                box-shadow: none;
+                padding: 0.5in;
+                max-width: 100%;
+            }
+            .section {
+                page-break-inside: avoid;
+            }
+        }
+        
+        .priority-box {
+            background: #f0e6f5;
+            padding: 15px;
+            margin: 20px 0;
+            border-left: 4px solid #8B4789;
+            font-size: 11px;
+        }
+        
+        .priority-box h3 {
+            color: #8B4789;
+            font-size: 12px;
+            margin-bottom: 8px;
+        }
+        
+        .priority-item {
+            margin-bottom: 5px;
+            margin-left: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>ROOTED SALON BACKEND</h1>
+            <p>Requirements Questionnaire</p>
+            <p>Date: ________________     Completed By: ____________________________</p>
+        </div>
+        
+        <!-- SECTION 1 -->
+        <div class="section">
+            <div class="section-title">SECTION 1: BUSINESS MODEL & STRUCTURE</div>
+            
+            <div class="subsection">
+                <div class="subsection-title">1.1 Salon Configuration</div>
+                <div class="question">
+                    <div class="checkbox"></div>
+                    <div class="question-text">Will Rooted operate as a single salon with multiple stylists or multiple salon locations?</div>
+                </div>
+                <div class="answer-line"></div>
+                
+                <div class="question">
+                    <div class="checkbox"></div>
+                    <div class="question-text">How many stylists/staff members are expected to use this system?</div>
+                </div>
+                <div class="answer-line"></div>
+                
+                <div class="question">
+                    <div class="checkbox"></div>
+                    <div class="question-text">Will there be booth renters (independent contractors with separate accounts/payouts)?</div>
+                </div>
+                <div class="answer-line"></div>
+                
+                <div class="question">
+                    <div class="checkbox"></div>
+                    <div class="question-text">Do you need manager-level access (multiple staff with different permissions)?</div>
+                </div>
+                <div class="answer-line"></div>
+            </div>
+            
+            <div class="subsection">
+                <div class="subsection-title">1.2 Service Types</div>
+                <div class="question">
+                    <div class="checkbox"></div>
+                    <div class="question-text">What specific services will Rooted offer? (e.g., haircuts, color, treatments, extensions, nails, etc.)</div>
+                </div>
+                <div class="answer-line"></div>
+                <div class="answer-line"></div>
+                
+                <div class="question">
+                    <div class="checkbox"></div>
+                    <div class="question-text">Will services have variable duration? (e.g., haircut = 30min, color = 60min, full service = 90min)</div>
+                </div>
+                <div class="answer-line"></div>
+                
+                <div class="question">
+                    <div class="checkbox"></div>
+                    <div class="question-text">Will services have fixed pricing or stylist-specific pricing variations?</div>
+                </div>
+                <div class="answer-line"></div>
+                
+                <div class="question">
+                    <div class="checkbox"></div>
+                    <div class="question-text">Will you offer service packages/bundles? (e.g., "Cut + Color = $X")</div>
+                </div>
+                <div class="answer-line"></div>
+            </div>
+            
+            <div class="subsection">
+                <div class="subsection-title">1.3 Staff/Stylist Management</div>
+                <div class="question">
+                    <div class="checkbox"></div>
+                    <div class="question-text">How many stylists initially? Projected growth?</div>
+                </div>
+                <div class="answer-line"></div>
+                
+                <div class="question">
+                    <div class="checkbox"></div>
+                    <div class="question-text">Will each stylist have their own booking page or just show all stylists together?</div>
+                </div>
+                <div class="answer-line"></div>
+                
+                <div class="question">
+                    <div class="checkbox"></div>
+                    <div class="question-text">Can clients request a specific stylist?</div>
+                </div>
+                <div class="answer-line"></div>
+                
+                <div class="question">
+                    <div class="checkbox"></div>
+                    <div class="question-text">Do stylists have availability constraints? (e.g., Mon-Fri only, specific hours)</div>
+                </div>
+                <div class="answer-line"></div>
+            </div>
+        </div>
+        
+        <!-- SECTION 2 -->
+        <div class="section">
+            <div class="section-title">SECTION 2: BOOKING & APPOINTMENT SYSTEM</div>
+            
+            <div class="subsection">
+                <div class="subsection-title">2.1 Calendar & Scheduling</div>
+                <div class="question">
+                    <div class="checkbox"></div>
+                    <div class="question-text">What are Rooted's business hours? (Open/close times daily)</div>
+                </div>
+                <div class="answer-line"></div>
+                
+                <div class="question">
+                    <div class="checkbox"></div>
+                    <div class="question-text">How far in advance can clients book appointments? (e.g., 1 week, 30 days, unlimited)</div>
+                </div>
+                <div class="answer-line"></div>
+                
+                <div class="question">
+                    <div class="checkbox"></div>
+                    <div class="question-text">What is the minimum booking notice? (e.g., can't book same-day)</div>
+                </div>
+                <div class="answer-line"></div>
+                
+                <div class="question">
+                    <div class="checkbox"></div>
+                    <div class="question-text">Should the system show real-time availability or book at specific time slots?</div>
+                </div>
+                <div class="answer-line"></div>
+                
+                <div class="question">
+                    <div class="checkbox"></div>
+                    <div class="question-text">What are your time slot intervals? (15-min, 30-min slots?)</div>
+                </div>
+                <div class="answer-line"></div>
+            </div>
+            
+            <div class="subsection">
+                <div class="subsection-title">2.2 Stylist Specialization</div>
+                <div class="question">
+                    <div class="checkbox"></div>
+                    <div class="question-text">Can stylists set their own availability/days off?</div>
+                </div>
+                <div class="answer-line"></div>
+                
+                <div class="question">
+                    <div class="checkbox"></div>
+                    <div class="question-text">Do certain stylists handle certain service types only?</div>
+                </div>
+                <div class="answer-line"></div>
+            </div>
+        </div>
+        
+        <!-- SECTION 3 -->
+        <div class="section">
+            <div class="section-title">SECTION 3: PAYMENT & PRICING</div>
+            
+            <div class="subsection">
+                <div class="subsection-title">3.1 Payment Processing</div>
+                <div class="question">
+                    <div class="checkbox"></div>
+                    <div class="question-text">Will clients pay online at booking or in-person at appointment?</div>
+                </div>
+                <div class="answer-line"></div>
+                
+                <div class="question">
+                    <div class="checkbox"></div>
+                    <div class="question-text">Do you accept online payments (credit card, Apple Pay, Google Pay)?</div>
+                </div>
+                <div class="answer-line"></div>
+                
+                <div class="question">
+                    <div class="checkbox"></div>
+                    <div class="question-text">Do you need deposit system? (e.g., collect 50% upfront)</div>
+                </div>
+                <div class="answer-line"></div>
+            </div>
+            
+            <div class="subsection">
+                <div class="subsection-title">3.2 Pricing & Discounts</div>
+                <div class="question">
+                    <div class="checkbox"></div>
+                    <div class="question-text">Will services have fixed pricing or price ranges?</div>
+                </div>
+                <div class="answer-line"></div>
+                
+                <div class="question">
+                    <div class="checkbox"></div>
+                    <div class="question-text">Do you offer first-time client discounts?</div>
+                </div>
+                <div class="answer-line"></div>
+                
+                <div class="question">
+                    <div class="checkbox"></div>
+                    <div class="question-text">Will there be seasonal promotions or loyalty discounts?</div>
+                </div>
+                <div class="answer-line"></div>
+            </div>
+        </div>
+        
+        <!-- SECTION 4 -->
+        <div class="section">
+            <div class="section-title">SECTION 4: CLIENT MANAGEMENT</div>
+            
+            <div class="subsection">
+                <div class="subsection-title">4.1 Client Profiles</div>
+                <div class="question">
+                    <div class="checkbox"></div>
+                    <div class="question-text">What client information must be stored? (name, email, phone, address, etc.)</div>
+                </div>
+                <div class="answer-line"></div>
+                <div class="answer-line"></div>
+                
+                <div class="question">
+                    <div class="checkbox"></div>
+                    <div class="question-text">Do you need client notes/history? (past services, preferences, allergies)</div>
+                </div>
+                <div class="answer-line"></div>
+                
+                <div class="question">
+                    <div class="checkbox"></div>
+                    <div class="question-text">Will clients have login accounts or book as guests?</div>
+                </div>
+                <div class="answer-line"></div>
+            </div>
+            
+            <div class="subsection">
+                <div class="subsection-title">4.2 Communication</div>
+                <div class="question">
+                    <div class="checkbox"></div>
+                    <div class="question-text">Do you need appointment reminders? (email, SMS, or both)</div>
+                </div>
+                <div class="answer-line"></div>
+                
+                <div class="question">
+                    <div class="checkbox"></div>
+                    <div class="question-text">When should reminders send? (24 hours before? 2 hours before?)</div>
+                </div>
+                <div class="answer-line"></div>
+            </div>
+        </div>
+        
+        <!-- SECTION 5 -->
+        <div class="section">
+            <div class="section-title">SECTION 5: REPORTING & ANALYTICS</div>
+            
+            <div class="subsection">
+                <div class="subsection-title">5.1 Business Metrics</div>
+                <div class="question">
+                    <div class="checkbox"></div>
+                    <div class="question-text">Do you need revenue reports? (total, by stylist, by service)</div>
+                </div>
+                <div class="answer-line"></div>
+                
+                <div class="question">
+                    <div class="checkbox"></div>
+                    <div class="question-text">Will you track appointment metrics? (booked vs. canceled, no-shows)</div>
+                </div>
+                <div class="answer-line"></div>
+                
+                <div class="question">
+                    <div class="checkbox"></div>
+                    <div class="question-text">Do you need client analytics? (new vs. returning, repeat rate)</div>
+                </div>
+                <div class="answer-line"></div>
+                
+                <div class="question">
+                    <div class="checkbox"></div>
+                    <div class="question-text">Will you track stylist performance? (appointments booked, revenue, ratings)</div>
+                </div>
+                <div class="answer-line"></div>
+            </div>
+        </div>
+        
+        <!-- SECTION 6 -->
+        <div class="section">
+            <div class="section-title">SECTION 6: MOBILE & WEB EXPERIENCE</div>
+            
+            <div class="subsection">
+                <div class="subsection-title">6.1 Client-Facing Features</div>
+                <div class="question">
+                    <div class="checkbox"></div>
+                    <div class="question-text">Will clients access booking via web browser, mobile app, or both?</div>
+                </div>
+                <div class="answer-line"></div>
+                
+                <div class="question">
+                    <div class="checkbox"></div>
+                    <div class="question-text">Should the booking site be branded? (Rooted custom domain/theme)</div>
+                </div>
+                <div class="answer-line"></div>
+                
+                <div class="question">
+                    <div class="checkbox"></div>
+                    <div class="question-text">Do you need a mobile app or is responsive web sufficient?</div>
+                </div>
+                <div class="answer-line"></div>
+            </div>
+            
+            <div class="subsection">
+                <div class="subsection-title">6.2 Admin/Staff Dashboard</div>
+                <div class="question">
+                    <div class="checkbox"></div>
+                    <div class="question-text">Will staff use web or mobile to manage calendar?</div>
+                </div>
+                <div class="answer-line"></div>
+                
+                <div class="question">
+                    <div class="checkbox"></div>
+                    <div class="question-text">Can staff access system from anywhere? (remote access)</div>
+                </div>
+                <div class="answer-line"></div>
+            </div>
+        </div>
+        
+        <!-- PRIORITY SECTION -->
+        <div class="priority-box">
+            <h3>PRIORITY PHASES - Select which features are most important:</h3>
+            
+            <div style="margin-bottom: 15px;">
+                <strong>Phase 1 (MVP - Must Have):</strong>
+                <div class="priority-item">☐ Basic appointment booking with stylist assignment</div>
+                <div class="priority-item">☐ Client intake forms & notes</div>
+                <div class="priority-item">☐ Payment processing (online payment at booking)</div>
+                <div class="priority-item">☐ Appointment reminders (email)</div>
+                <div class="priority-item">☐ Basic calendar view for staff</div>
+                <div class="priority-item">☐ Client history/past appointments</div>
+            </div>
+            
+            <div style="margin-bottom: 15px;">
+                <strong>Phase 2 (High Priority):</strong>
+                <div class="priority-item">☐ Loyalty/rewards system</div>
+                <div class="priority-item">☐ Stylist specialization & preferences</div>
+                <div class="priority-item">☐ Recurring appointments</div>
+                <div class="priority-item">☐ SMS notifications</div>
+                <div class="priority-item">☐ Revenue reports</div>
+            </div>
+            
+            <div>
+                <strong>Phase 3 (Nice to Have):</strong>
+                <div class="priority-item">☐ Mobile app</div>
+                <div class="priority-item">☐ Advanced analytics</div>
+                <div class="priority-item">☐ Waitlist system</div>
+                <div class="priority-item">☐ Product inventory</div>
+                <div class="priority-item">☐ Multi-location support</div>
+            </div>
+        </div>
+        
+        <!-- ADDITIONAL NOTES -->
+        <div class="section">
+            <div class="section-title">ADDITIONAL NOTES & COMMENTS</div>
+            <div class="answer-line"></div>
+            <div class="answer-line"></div>
+            <div class="answer-line"></div>
+            <div class="answer-line"></div>
+            <div class="answer-line"></div>
+        </div>
+        
+        <div class="footer">
+            <p><strong>To Print/Save as PDF:</strong> Press Ctrl+P (Windows) or Cmd+P (Mac) and select "Print to PDF" or your printer.</p>
+            <p>Generated from ROOTED Backend Requirements Analysis | November 27, 2025</p>
+        </div>
+    </div>
+</body>
+</html>
