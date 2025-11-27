@@ -13,7 +13,7 @@ const newsletterRoutes = require('./routes/newsletter');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware
+// Middleware - ORDER MATTERS!
 app.use(helmet({
     contentSecurityPolicy: false,
     frameguard: { action: 'SAMEORIGIN' },
@@ -21,6 +21,27 @@ app.use(helmet({
     noSniff: true,
     referrerPolicy: { policy: 'strict-origin-when-cross-origin' }
 }));
+
+// Cache and security headers MUST come before everything
+app.use((req, res, next) => {
+    // Ensure X-Content-Type-Options is always set
+    res.setHeader('X-Content-Type-Options', 'nosniff');
+    
+    // API endpoints: no caching
+    if (req.path.startsWith('/api')) {
+        res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0');
+    } 
+    // Static assets: cache for 1 year
+    else if (req.path.match(/\.(js|css|woff|woff2|ttf|eot|png|jpg|jpeg|gif|svg)$/i)) {
+        res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+    } 
+    // HTML and everything else: 1 hour cache with revalidation
+    else {
+        res.setHeader('Cache-Control', 'public, max-age=3600, must-revalidate');
+    }
+    next();
+});
+
 app.use(cors({
     origin: ['http://localhost', 'http://localhost:3000', 'http://localhost:8080', 'http://localhost:5500'],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
@@ -29,25 +50,18 @@ app.use(cors({
 app.use(bodyParser.json({ limit: '10mb' }));
 app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
 
-// Cache and security headers middleware - MUST be before static files
-app.use((req, res, next) => {
-    // API endpoints: no caching
-    if (req.path.startsWith('/api')) {
-        res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0');
-        res.setHeader('X-Content-Type-Options', 'nosniff');
-    } else if (req.path.match(/\.(js|css|woff|woff2|ttf|eot)$/)) {
-        // Static assets: cache for 1 year
-        res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
-    } else {
-        // HTML: 1 hour cache with revalidation
-        res.setHeader('Cache-Control', 'public, max-age=3600, must-revalidate');
-        res.setHeader('X-Content-Type-Options', 'nosniff');
-    }
-    next();
-});
-
 // Static files - serve the frontend
-app.use(express.static(path.join(__dirname, '../')));
+app.use(express.static(path.join(__dirname, '../'), {
+    setHeaders: (res, filepath) => {
+        // Ensure headers are set for static files too
+        res.setHeader('X-Content-Type-Options', 'nosniff');
+        if (filepath.match(/\.(js|css|woff|woff2|ttf|eot|png|jpg|jpeg|gif|svg)$/i)) {
+            res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+        } else {
+            res.setHeader('Cache-Control', 'public, max-age=3600, must-revalidate');
+        }
+    }
+}));
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
