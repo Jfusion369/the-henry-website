@@ -25,11 +25,15 @@ app.use((req, res, next) => {
     // API endpoints: no caching
     if (req.path.startsWith('/api')) {
         res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0');
-    } else {
+        res.setHeader('X-Content-Type-Options', 'nosniff');
+    } else if (req.path.match(/\.(js|css|woff|woff2|ttf|eot)$/)) {
         // Static assets: cache for 1 year
         res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+    } else {
+        // HTML: 1 hour cache with revalidation
+        res.setHeader('Cache-Control', 'public, max-age=3600, must-revalidate');
+        res.setHeader('X-Content-Type-Options', 'nosniff');
     }
-    res.setHeader('X-Content-Type-Options', 'nosniff');
     next();
 });
 app.use(cors({
