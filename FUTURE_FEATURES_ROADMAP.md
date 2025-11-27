@@ -71,7 +71,7 @@ Required:
 - Service pricing & duration
 - Booking confirmation & reminders
 - Stylist performance tracking
-- **Reference:** [GlossGenius](https://glossgenius.com/online-booking?utm_adid=&utm_source=bing&utm_medium=cpc&utm_campaign=RFL_Non_Brand_Salon_Type&utm_content=Salon&utm_term=top%20salon%20business%20software&hsa_acc=5125862772&hsa_cam=17166634728&hsa_grp=1364495689262047&hsa_ad=&hsa_src=o&hsa_tgt=kwd-85282159005404:loc-190&hsa_kw=top%20salon%20business%20software&hsa_mt=p&hsa_net=adwords&hsa_ver=3&msclkid=b91d590b10961b3c272e3023bd763372) - Existing platform with all required salon booking features
+- **Reference:** [GlossGenius](https://glossgenius.com/) - Existing platform with all required salon booking features
 #### Market (Retail/Shopping)
 - Product inventory with images
 - Vendor management (if multi-vendor)
