@@ -159,11 +159,13 @@ if (contactForm) {
       
       const data = await response.json();
       
-      if (data.success) {
+      if (response.ok && data.success) {
         showNotification('Thank you! Your message has been sent successfully.', 'success');
         contactForm.reset();
       } else {
-        showNotification(data.message || 'Error sending message. Please try again.', 'error');
+        const errorMsg = data.message || data.error || 'Error sending message. Please try again.';
+        console.error('Contact form response error:', errorMsg);
+        showNotification(errorMsg, 'error');
       }
     } catch (error) {
       console.error('Contact form error:', error);

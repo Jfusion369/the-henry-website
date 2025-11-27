@@ -47,7 +47,8 @@ router.post('/contact', [
         console.error('Error submitting contact form:', error);
         res.status(500).json({
             success: false,
-            message: 'Error submitting contact form. Please try again later.'
+            message: 'Error submitting contact form. Please try again later.',
+            error: process.env.NODE_ENV === 'development' ? error.message : undefined
         });
     }
 });

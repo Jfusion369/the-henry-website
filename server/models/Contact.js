@@ -15,8 +15,10 @@ class Contact {
             
             db.run(query, [name, email, phone, subject, message], function(err) {
                 if (err) {
+                    console.error('Database error creating contact:', err.message);
                     reject(err);
                 } else {
+                    console.log('Contact created successfully with ID:', this.lastID);
                     resolve({
                         id: this.lastID,
                         ...data,

@@ -24,6 +24,10 @@ transporter.verify((error, success) => {
  */
 async function sendContactNotification(contactData) {
     try {
+        console.log('Attempting to send contact notification...');
+        console.log('From:', process.env.EMAIL_FROM);
+        console.log('To Admin:', process.env.ADMIN_EMAIL);
+        
         // Email to admin
         await transporter.sendMail({
             from: process.env.EMAIL_FROM,
@@ -42,6 +46,8 @@ async function sendContactNotification(contactData) {
             `
         });
 
+        console.log('Admin email sent successfully');
+
         // Confirmation email to user
         await transporter.sendMail({
             from: process.env.EMAIL_FROM,
@@ -58,9 +64,10 @@ async function sendContactNotification(contactData) {
             `
         });
 
+        console.log('Confirmation email sent successfully');
         return { success: true, message: 'Emails sent successfully' };
     } catch (error) {
-        console.error('Error sending email:', error);
+        console.error('Error sending email:', error.message);
         throw error;
     }
 }
