@@ -111,7 +111,7 @@ footer {
   right: -250px;
   width: 250px;
   height: 100vh;
-  background: rgba(158, 27, 50, 0.9);
+  background: transparent;
   color: white;
   box-shadow: -2px 0 8px rgba(0,0,0,0.3);
   transition: right 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
