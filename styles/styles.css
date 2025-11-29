@@ -165,7 +165,7 @@ footer {
 /* Desktop navigation bar */
 .nav-desktop {
   display: none;
-  background: linear-gradient(to right, #9E1B32 0%, #8B1528 100%);
+  background: linear-gradient(to right, rgba(158, 27, 50, 0.95) 0%, rgba(139, 21, 40, 0.95) 100%);
   padding: 0;
   position: fixed;
   top: 0;
