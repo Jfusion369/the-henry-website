@@ -8,6 +8,36 @@
     <style>
         .rooted-salon-header {
             background: #355E3B !important;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 30px 20px;
+            min-height: 250px;
+        }
+        
+        .rooted-salon-header .header-inner {
+            max-width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .rooted-logo-header {
+            max-width: 100%;
+            height: auto;
+            max-height: 400px;
+            object-fit: contain;
+        }
+        
+        @media (max-width: 768px) {
+            .rooted-salon-header {
+                min-height: 200px;
+                padding: 20px 10px;
+            }
+            
+            .rooted-logo-header {
+                max-height: 300px;
+            }
         }
         
         .rooted-salon-header .site-title {
@@ -134,8 +164,7 @@
 
     <header class="rooted-salon-header">
         <div class="container header-inner">
-            <h1 class="site-title">Rooted Salon LLC</h1>
-            <p class="site-subtitle">Full-Service Hair Salon at The Henry LLC</p>
+            <img src="images/rooted-logo.png" alt="Rooted Salon Logo" class="rooted-logo-header">
         </div>
     </header>
 
