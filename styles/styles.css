@@ -27,6 +27,14 @@ h1.site-title {
     font-family: "Cormorant Garamond", serif;
 }
 
+.site-title-image {
+    max-width: 100%;
+    height: auto;
+    max-height: 400px;
+    display: block;
+    margin: 0 auto;
+}
+
 h2 {
     color: #333;
 }
