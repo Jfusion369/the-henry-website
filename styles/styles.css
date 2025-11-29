@@ -24,6 +24,7 @@ header {
 h1.site-title {
     margin: 0;
     font-size: 2.5em;
+    font-family: "Silk Sans Display Medium", serif;
 }
 
 h2 {
@@ -85,9 +86,9 @@ footer {
 }
 
 .hamburger span {
-  display: block;
+  display:block;
   height: 4px;
-  background: #9E1B32;
+  background:  #3b3839;
   border-radius: 2px;
   transition: 0.4s;
 }
