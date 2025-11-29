@@ -1,4 +1,4 @@
-# The Henry LLC - Future Features Roadmap
+# The Henry - Future Features Roadmap
 
 **Date Saved:** November 27, 2025  
 **Status:** Bookmarked for Future Development  

@@ -185,13 +185,13 @@ ADMIN_EMAIL=admin@thehenryllc.com
 <p><strong>Your message:</strong></p>
 <p>{{message}}</p>
 <hr>
-<p>Best regards,<br>The Henry LLC Team</p>
+<p>Best regards,<br>The Henry Team</p>
 ```
 
 ### Newsletter Welcome Email
 ```html
 <h2>Welcome to our newsletter!</h2>
-<p>Thank you for subscribing to The Henry LLC newsletter.</p>
+<p>Thank you for subscribing to The Henry newsletter.</p>
 <p>We'll keep you updated on:</p>
 <ul>
   <li>New business openings</li>
@@ -199,7 +199,7 @@ ADMIN_EMAIL=admin@thehenryllc.com
   <li>Special promotions</li>
   <li>Local news from Henry County, Kentucky</li>
 </ul>
-<p>The Henry LLC Team</p>
+<p>The Henry Team</p>
 ```
 
 ### Admin Notification Email

@@ -1,7 +1,7 @@
-# The Henry LLC Website
+# The Henry Website
 
 ## Overview
-The Henry LLC website is designed to promote and provide information about The Henry LLC, a company focused on revitalizing rural main streets in Henry County, Kentucky. The website includes details about the company, its phased opening plan, and contact information.
+The Henry website is designed to promote and provide information about The Henry, a company focused on revitalizing rural main streets in Henry County, Kentucky. The website includes details about the company, its phased opening plan, and contact information.
 
 ## Project Structure
 ```

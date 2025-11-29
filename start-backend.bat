@@ -1,9 +1,9 @@
 @echo off
-REM Quick Start Script for The Henry LLC Backend
+REM Quick Start Script for The Henry Backend
 
 echo.
 echo ======================================
-echo The Henry LLC - Backend Quick Start
+echo The Henry - Backend Quick Start
 echo ======================================
 echo.
 
@@ -55,7 +55,7 @@ if not exist node_modules (
 REM Start the server
 echo.
 echo ======================================
-echo Starting The Henry LLC Backend Server
+echo Starting The Henry Backend Server
 echo ======================================
 echo.
 echo Server will run on: http://localhost:3000

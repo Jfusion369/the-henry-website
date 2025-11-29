@@ -52,7 +52,7 @@ async function sendContactNotification(contactData) {
         await transporter.sendMail({
             from: process.env.EMAIL_FROM,
             to: contactData.email,
-            subject: 'We received your message - The Henry LLC',
+            subject: 'We received your message - The Henry',
             html: `
                 <h2>Thank you for contacting us!</h2>
                 <p>Hi ${contactData.name},</p>
@@ -60,7 +60,7 @@ async function sendContactNotification(contactData) {
                 <p><strong>Your message:</strong></p>
                 <p>${contactData.message.replace(/\n/g, '<br>')}</p>
                 <hr>
-                <p>Best regards,<br>The Henry LLC Team</p>
+                <p>Best regards,<br>The Henry Team</p>
             `
         });
 
@@ -81,13 +81,13 @@ async function sendNewsletterConfirmation(email) {
         await transporter.sendMail({
             from: process.env.EMAIL_FROM,
             to: email,
-            subject: 'Welcome to The Henry LLC Newsletter',
+            subject: 'Welcome to The Henry Newsletter',
             html: `
                 <h2>Welcome to our newsletter!</h2>
-                <p>Thank you for subscribing to The Henry LLC newsletter.</p>
+                <p>Thank you for subscribing to The Henry newsletter.</p>
                 <p>We'll keep you updated on events, new businesses, and community news from Henry County, Kentucky.</p>
                 <hr>
-                <p>The Henry LLC Team</p>
+                <p>The Henry Team</p>
             `
         });
 

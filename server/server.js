@@ -98,7 +98,7 @@ app.use(express.static(path.join(__dirname, '../'), {
 app.get('/api/health', (req, res) => {
     res.json({ 
         status: 'ok', 
-        message: 'The Henry LLC backend is running',
+        message: 'The Henry backend is running',
         timestamp: new Date().toISOString()
     });
 });
@@ -110,7 +110,7 @@ app.use('/api/newsletter', newsletterRoutes);
 // API documentation
 app.get('/api', (req, res) => {
     res.json({
-        message: 'The Henry LLC Backend API',
+        message: 'The Henry Backend API',
         version: '1.0.0',
         endpoints: {
             health: 'GET /api/health',
@@ -150,7 +150,7 @@ app.use((err, req, res, next) => {
 
 // Start server
 app.listen(PORT, () => {
-    console.log(`🚀 The Henry LLC Backend Server running on http://localhost:${PORT}`);
+    console.log(`🚀 The Henry Backend Server running on http://localhost:${PORT}`);
     console.log(`📧 Email service: ${process.env.EMAIL_SERVICE || 'not configured'}`);
     console.log(`💾 Database: ${process.env.DATABASE_URL || './data/contacts.db'}`);
 });

@@ -121,7 +121,7 @@ Response:
 ```json
 {
   "status": "ok",
-  "message": "The Henry LLC backend is running",
+  "message": "The Henry backend is running",
   "timestamp": "2025-01-15T10:30:00.000Z"
 }
 ```

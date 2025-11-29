@@ -85,7 +85,7 @@ Root
 curl http://localhost:3000/api/health
 
 # Should see:
-# {"status":"ok","message":"The Henry LLC backend is running"}
+# {"status":"ok","message":"The Henry backend is running"}
 ```
 
 ## Database Location

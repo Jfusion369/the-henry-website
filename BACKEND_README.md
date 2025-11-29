@@ -1,4 +1,4 @@
-# The Henry LLC - Backend Implementation Complete! 🎉
+# The Henry - Backend Implementation Complete! 🎉
 
 ## Overview
 
@@ -200,7 +200,7 @@ See `EMAIL_SETUP.md` for other providers (Outlook, Yahoo, SendGrid, etc.)
 curl http://localhost:3000/api/health
 
 # Should return:
-# {"status":"ok","message":"The Henry LLC backend is running","timestamp":"2025-01-15T..."}
+# {"status":"ok","message":"The Henry backend is running","timestamp":"2025-01-15T..."}
 ```
 
 ### 2. Test Contact Form
