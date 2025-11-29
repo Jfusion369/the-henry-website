@@ -35,6 +35,12 @@ h1.site-title {
     margin: 0 auto;
 }
 
+@media (max-width: 720px) {
+    .site-title-image {
+        max-height: 250px;
+    }
+}
+
 h2 {
     color: #333;
 }
