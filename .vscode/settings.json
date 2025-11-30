@@ -1,0 +1,12 @@
+{
+  "workbench.startupEditor": "none",
+  "files.exclude": {
+    "**/.env": false,
+    "**/node_modules": true
+  },
+  "markdown.preview.breaks": true,
+  "[markdown]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  }
+}
