@@ -137,8 +137,112 @@ console.log('🌐 Using backend:', window.location.hostname === 'localhost' ? 'L
 const contactForm = document.getElementById('contactForm');
 if (contactForm) {
   console.log('✅ Contact form found');
+  
+  let currentCaptchaId = null;
+  let captchaVerified = false;
+  
+  // Initialize captcha on form load
+  async function initializeCaptcha() {
+    try {
+      console.log('🔐 Initializing captcha...');
+      const response = await fetch(`${API_URL}/captcha/generate`, {
+        method: 'GET'
+      });
+      
+      const data = await response.json();
+      
+      if (data.success) {
+        currentCaptchaId = data.captchaId;
+        document.getElementById('captchaQuestion').innerHTML = `<p>${data.question}</p>`;
+        document.getElementById('captchaAnswer').disabled = false;
+        document.getElementById('verifyCaptchaBtn').disabled = false;
+        document.getElementById('captchaFeedback').textContent = '';
+        document.getElementById('captchaFeedback').classList.remove('show', 'success', 'error', 'loading');
+        captchaVerified = false;
+        document.getElementById('submitContactBtn').disabled = true;
+        console.log(`🔐 Captcha generated: ${currentCaptchaId}`);
+      } else {
+        showCaptchaFeedback(data.message || 'Error generating captcha', 'error');
+        console.error('Captcha generation failed:', data);
+      }
+    } catch (error) {
+      console.error('❌ Error initializing captcha:', error);
+      showCaptchaFeedback('Error loading security challenge. Please refresh.', 'error');
+    }
+  }
+  
+  // Verify captcha answer
+  document.getElementById('verifyCaptchaBtn').addEventListener('click', async function(e) {
+    e.preventDefault();
+    
+    const answer = document.getElementById('captchaAnswer').value;
+    
+    if (!answer) {
+      showCaptchaFeedback('Please enter your answer', 'error');
+      return;
+    }
+    
+    try {
+      showCaptchaFeedback('Verifying...', 'loading');
+      this.disabled = true;
+      
+      const response = await fetch(`${API_URL}/captcha/verify`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          captchaId: currentCaptchaId,
+          answer: parseInt(answer)
+        })
+      });
+      
+      const data = await response.json();
+      
+      if (data.success) {
+        showCaptchaFeedback('✓ Verified! You can now submit the form.', 'success');
+        document.querySelector('.captcha-box').classList.add('verified');
+        document.querySelector('.captcha-box').classList.remove('error');
+        captchaVerified = true;
+        document.getElementById('submitContactBtn').disabled = false;
+        document.getElementById('captchaAnswer').disabled = true;
+        this.disabled = true;
+        console.log('✅ Captcha verified successfully');
+      } else {
+        showCaptchaFeedback(data.message || 'Incorrect answer', 'error');
+        document.querySelector('.captcha-box').classList.add('error');
+        document.querySelector('.captcha-box').classList.remove('verified');
+        this.disabled = false;
+        console.warn('❌ Captcha verification failed:', data);
+      }
+    } catch (error) {
+      console.error('❌ Error verifying captcha:', error);
+      showCaptchaFeedback('Error verifying captcha. Please try again.', 'error');
+      this.disabled = false;
+    }
+  });
+  
+  function showCaptchaFeedback(message, type) {
+    const feedbackDiv = document.getElementById('captchaFeedback');
+    feedbackDiv.textContent = message;
+    feedbackDiv.className = `captcha-feedback show ${type}`;
+  }
+  
+  // Initialize captcha when form is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeCaptcha);
+  } else {
+    initializeCaptcha();
+  }
+  
+  // Handle form submission
   contactForm.addEventListener('submit', async function(e) {
     e.preventDefault();
+    
+    if (!captchaVerified) {
+      showNotification('Please complete the security verification first', 'error');
+      return;
+    }
     
     console.log('📝 Contact form submitted');
     
@@ -154,11 +258,12 @@ if (contactForm) {
         email: document.getElementById('contactEmail').value,
         phone: document.getElementById('contactPhone').value || '',
         subject: document.getElementById('contactSubject').value || '',
-        message: document.getElementById('contactMessage').value
+        message: document.getElementById('contactMessage').value,
+        captchaId: currentCaptchaId
       };
       
       console.log('📤 Sending data to:', `${API_URL}/contact`);
-      console.log('📋 Form data:', formData);
+      console.log('📋 Form data:', { ...formData, captchaId: '***' });
       
       const response = await fetch(`${API_URL}/contact`, {
         method: 'POST',
@@ -178,6 +283,13 @@ if (contactForm) {
         console.log('✅ Success!');
         showNotification('Thank you! Your message has been sent successfully.', 'success');
         contactForm.reset();
+        captchaVerified = false;
+        document.querySelector('.captcha-box').classList.remove('verified', 'error');
+        document.getElementById('submitContactBtn').disabled = true;
+        document.getElementById('captchaAnswer').disabled = false;
+        document.getElementById('verifyCaptchaBtn').disabled = false;
+        // Regenerate new captcha for next submission
+        initializeCaptcha();
       } else {
         const errorMsg = data.message || data.error || 'Error sending message. Please try again.';
         console.error('Contact form response error:', errorMsg);
