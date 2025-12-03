@@ -3,12 +3,13 @@ const { body, validationResult } = require('express-validator');
 const Contact = require('../models/Contact');
 const { sendContactNotification } = require('../config/email');
 const { generateCaptcha, verifyCaptcha, isCaptchaVerified, checkRateLimit, getClientIp } = require('../utils/captcha');
+const { generateVisualQuestion, verifyVisualAnswer, isVisualQuestionVerified } = require('../utils/visual-security');
 
 const router = express.Router();
 
 /**
  * GET /api/captcha/generate
- * Generate a new captcha challenge
+ * Generate a new VISUAL security question (enhanced version)
  */
 router.get('/captcha/generate', (req, res) => {
     try {
@@ -24,27 +25,31 @@ router.get('/captcha/generate', (req, res) => {
             });
         }
         
-        const captcha = generateCaptcha();
-        console.log(`🔐 Captcha generated for IP ${clientIp}`);
+        // Generate visual question (enhanced security)
+        const visualQuestion = generateVisualQuestion();
+        console.log(`🖼️ Visual security question generated for IP ${clientIp}`);
         
         res.json({
             success: true,
-            captchaId: captcha.captchaId,
-            question: captcha.question,
-            hint: captcha.hint
+            captchaId: visualQuestion.sessionId,
+            question: visualQuestion.question,
+            hint: visualQuestion.hint,
+            type: visualQuestion.type,
+            imageSvg: visualQuestion.imageSvg,
+            isVisual: true
         });
     } catch (error) {
-        console.error('❌ Error generating captcha:', error);
+        console.error('❌ Error generating visual question:', error);
         res.status(500).json({
             success: false,
-            message: 'Error generating captcha'
+            message: 'Error generating security question'
         });
     }
 });
 
 /**
  * POST /api/captcha/verify
- * Verify a captcha answer
+ * Verify visual question answer (enhanced version)
  */
 router.post('/captcha/verify', [
     body('captchaId').notEmpty().withMessage('Captcha ID is required'),
@@ -60,26 +65,41 @@ router.post('/captcha/verify', [
         }
         
         const { captchaId, answer } = req.body;
+        
+        // Try to verify as visual question first (new enhanced security)
+        const visualResult = verifyVisualAnswer(captchaId, answer);
+        if (visualResult.success !== undefined) {
+            return res.json({
+                success: visualResult.success,
+                message: visualResult.message,
+                verified: visualResult.verified,
+                attemptsRemaining: visualResult.attemptsRemaining,
+                isVisual: true
+            });
+        }
+        
+        // Fall back to math captcha (legacy support)
         const result = verifyCaptcha(captchaId, answer);
         
         res.json({
             success: result.success,
             message: result.message,
             verified: result.verified,
-            attemptsRemaining: result.attemptsRemaining
+            attemptsRemaining: result.attemptsRemaining,
+            isVisual: false
         });
     } catch (error) {
-        console.error('❌ Error verifying captcha:', error);
+        console.error('❌ Error verifying answer:', error);
         res.status(500).json({
             success: false,
-            message: 'Error verifying captcha'
+            message: 'Error verifying answer'
         });
     }
 });
 
 /**
  * POST /api/contact
- * Submit a new contact form (requires verified captcha)
+ * Submit a new contact form (requires verified visual security question or math captcha)
  */
 router.post('/contact', [
     body('name').trim().notEmpty().withMessage('Name is required'),
@@ -88,7 +108,7 @@ router.post('/contact', [
     body('subject').optional().trim(),
     body('message').trim().notEmpty().withMessage('Message is required')
         .isLength({ min: 10 }).withMessage('Message must be at least 10 characters'),
-    body('captchaId').notEmpty().withMessage('Captcha ID is required')
+    body('captchaId').notEmpty().withMessage('Security verification ID is required')
 ], async (req, res) => {
     try {
         const clientIp = getClientIp(req);
@@ -114,17 +134,20 @@ router.post('/contact', [
             });
         }
         
-        // Verify captcha before processing
+        // Verify security question (visual or math)
         const { captchaId } = req.body;
-        if (!isCaptchaVerified(captchaId)) {
-            console.warn(`⚠️ Captcha not verified for submission: ${captchaId}`);
+        const isVisualVerified = isVisualQuestionVerified(captchaId);
+        const isMathVerified = isCaptchaVerified(captchaId);
+        
+        if (!isVisualVerified && !isMathVerified) {
+            console.warn(`⚠️ Security verification failed for submission: ${captchaId}`);
             return res.status(400).json({
                 success: false,
-                message: 'Please complete and verify the captcha first'
+                message: 'Please complete the security verification first'
             });
         }
 
-        console.log('✅ Captcha verified, proceeding with contact submission...');
+        console.log(`✅ ${isVisualVerified ? 'Visual' : 'Math'} security verified, proceeding with submission...`);
         
         // Remove captchaId from contact record before saving
         const contactData = { ...req.body };

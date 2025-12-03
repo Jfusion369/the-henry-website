@@ -132,7 +132,7 @@ console.log('📍 Current hostname:', window.location.hostname);
 console.log('📍 Current origin:', window.location.origin);
 console.log('🌐 Using backend:', window.location.hostname === 'localhost' ? 'LOCAL (localhost:3000)' : 'PRODUCTION (/api)');
 
-/* ===== CONTACT FORM ===== */
+/* ===== CONTACT FORM WITH VISUAL SECURITY ===== */
 
 const contactForm = document.getElementById('contactForm');
 if (contactForm) {
@@ -140,11 +140,12 @@ if (contactForm) {
   
   let currentCaptchaId = null;
   let captchaVerified = false;
+  let isVisualQuestion = false;
   
-  // Initialize captcha on form load
-  async function initializeCaptcha() {
+  // Initialize security question on form load
+  async function initializeSecurity() {
     try {
-      console.log('🔐 Initializing captcha...');
+      console.log('🔐 Initializing visual security question...');
       const response = await fetch(`${API_URL}/captcha/generate`, {
         method: 'GET'
       });
@@ -153,25 +154,50 @@ if (contactForm) {
       
       if (data.success) {
         currentCaptchaId = data.captchaId;
-        document.getElementById('captchaQuestion').innerHTML = `<p>${data.question}</p>`;
+        isVisualQuestion = data.isVisual || false;
+        
+        if (isVisualQuestion && data.imageSvg) {
+          // Display visual question
+          console.log(`🖼️ Visual question loaded: ${data.type}`);
+          document.getElementById('captchaVisualContainer').style.display = 'block';
+          document.getElementById('captchaQuestion').style.display = 'none';
+          document.getElementById('captchaQuestionText').textContent = data.question;
+          document.getElementById('captchaSvgDisplay').innerHTML = data.imageSvg;
+          document.getElementById('captchaHint').textContent = `💡 Hint: ${data.hint}`;
+          
+          // Accept text input for visual questions
+          document.getElementById('captchaAnswer').type = 'text';
+          document.getElementById('captchaAnswer').placeholder = 'Enter your answer';
+        } else {
+          // Display math question (fallback)
+          console.log('🔐 Math question loaded (fallback)');
+          document.getElementById('captchaVisualContainer').style.display = 'none';
+          document.getElementById('captchaQuestion').style.display = 'block';
+          document.getElementById('captchaQuestion').innerHTML = `<p>${data.question}</p>`;
+          
+          // Accept numeric input for math questions
+          document.getElementById('captchaAnswer').type = 'number';
+          document.getElementById('captchaAnswer').placeholder = 'Your answer';
+        }
+        
         document.getElementById('captchaAnswer').disabled = false;
         document.getElementById('verifyCaptchaBtn').disabled = false;
         document.getElementById('captchaFeedback').textContent = '';
         document.getElementById('captchaFeedback').classList.remove('show', 'success', 'error', 'loading');
         captchaVerified = false;
         document.getElementById('submitContactBtn').disabled = true;
-        console.log(`🔐 Captcha generated: ${currentCaptchaId}`);
+        console.log(`✅ Security question ready: ${currentCaptchaId}`);
       } else {
-        showCaptchaFeedback(data.message || 'Error generating captcha', 'error');
-        console.error('Captcha generation failed:', data);
+        showCaptchaFeedback(data.message || 'Error loading security question', 'error');
+        console.error('Security question generation failed:', data);
       }
     } catch (error) {
-      console.error('❌ Error initializing captcha:', error);
-      showCaptchaFeedback('Error loading security challenge. Please refresh.', 'error');
+      console.error('❌ Error initializing security:', error);
+      showCaptchaFeedback('Error loading security question. Please refresh.', 'error');
     }
   }
   
-  // Verify captcha answer
+  // Verify security question answer
   document.getElementById('verifyCaptchaBtn').addEventListener('click', async function(e) {
     e.preventDefault();
     
@@ -193,7 +219,7 @@ if (contactForm) {
         },
         body: JSON.stringify({
           captchaId: currentCaptchaId,
-          answer: parseInt(answer)
+          answer: answer
         })
       });
       
@@ -207,17 +233,17 @@ if (contactForm) {
         document.getElementById('submitContactBtn').disabled = false;
         document.getElementById('captchaAnswer').disabled = true;
         this.disabled = true;
-        console.log('✅ Captcha verified successfully');
+        console.log('✅ Security verification passed');
       } else {
-        showCaptchaFeedback(data.message || 'Incorrect answer', 'error');
+        showCaptchaFeedback(data.message || 'Incorrect answer. Please try again.', 'error');
         document.querySelector('.captcha-box').classList.add('error');
         document.querySelector('.captcha-box').classList.remove('verified');
         this.disabled = false;
-        console.warn('❌ Captcha verification failed:', data);
+        console.warn('❌ Verification failed:', data);
       }
     } catch (error) {
-      console.error('❌ Error verifying captcha:', error);
-      showCaptchaFeedback('Error verifying captcha. Please try again.', 'error');
+      console.error('❌ Error verifying answer:', error);
+      showCaptchaFeedback('Error verifying answer. Please try again.', 'error');
       this.disabled = false;
     }
   });
@@ -228,11 +254,11 @@ if (contactForm) {
     feedbackDiv.className = `captcha-feedback show ${type}`;
   }
   
-  // Initialize captcha when form is ready
+  // Initialize security on form ready
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initializeCaptcha);
+    document.addEventListener('DOMContentLoaded', initializeSecurity);
   } else {
-    initializeCaptcha();
+    initializeSecurity();
   }
   
   // Handle form submission
@@ -263,7 +289,6 @@ if (contactForm) {
       };
       
       console.log('📤 Sending data to:', `${API_URL}/contact`);
-      console.log('📋 Form data:', { ...formData, captchaId: '***' });
       
       const response = await fetch(`${API_URL}/contact`, {
         method: 'POST',
@@ -277,8 +302,6 @@ if (contactForm) {
       
       const data = await response.json();
       
-      console.log('📦 Response data:', data);
-      
       if (response.ok && data.success) {
         console.log('✅ Success!');
         showNotification('Thank you! Your message has been sent successfully.', 'success');
@@ -288,8 +311,8 @@ if (contactForm) {
         document.getElementById('submitContactBtn').disabled = true;
         document.getElementById('captchaAnswer').disabled = false;
         document.getElementById('verifyCaptchaBtn').disabled = false;
-        // Regenerate new captcha for next submission
-        initializeCaptcha();
+        // Regenerate new security question for next submission
+        initializeSecurity();
       } else {
         const errorMsg = data.message || data.error || 'Error sending message. Please try again.';
         console.error('Contact form response error:', errorMsg);
@@ -297,7 +320,6 @@ if (contactForm) {
       }
     } catch (error) {
       console.error('❌ Contact form error:', error);
-      console.error('Error stack:', error.stack);
       showNotification('Error sending message. Please try again or contact us directly.', 'error');
     } finally {
       submitButton.disabled = false;

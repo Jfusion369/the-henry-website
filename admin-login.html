@@ -290,12 +290,21 @@
                     <div class="captcha-container">
                         <h4 class="captcha-title">🔐 Security Verification</h4>
                         <div class="captcha-box">
-                            <div id="captchaQuestion" class="captcha-question">
+                            <!-- Visual Question Display -->
+                            <div id="captchaVisualContainer" class="captcha-visual-container" style="display: none;">
+                                <div id="captchaQuestionText" class="captcha-question-text"></div>
+                                <div id="captchaSvgDisplay" class="captcha-svg-display"></div>
+                                <p id="captchaHint" class="captcha-hint"></p>
+                            </div>
+                            
+                            <!-- Math Question Display (Legacy) -->
+                            <div id="captchaQuestion" class="captcha-question" style="display: none;">
                                 <p>Loading security challenge...</p>
                             </div>
+                            
                             <div class="captcha-input-group">
                                 <input 
-                                    type="number" 
+                                    type="text" 
                                     id="captchaAnswer" 
                                     name="captchaAnswer" 
                                     placeholder="Your answer" 
@@ -483,6 +492,50 @@
                 background: #f8d7da;
                 color: #721c24;
                 border: 1px solid #f5c6cb;
+            }
+            
+            .captcha-feedback.loading {
+                background: #d1ecf1;
+                color: #0c5460;
+                border: 1px solid #bee5eb;
+            }
+            
+            /* Visual Question Styling */
+            .captcha-visual-container {
+                text-align: center;
+                margin-bottom: 15px;
+            }
+            
+            .captcha-question-text {
+                font-size: 1rem;
+                font-weight: 600;
+                color: #333;
+                margin-bottom: 15px;
+            }
+            
+            .captcha-svg-display {
+                background: #f9f9f9;
+                border: 2px solid #ddd;
+                border-radius: 4px;
+                padding: 10px;
+                margin-bottom: 12px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                min-height: 220px;
+            }
+            
+            .captcha-svg-display svg {
+                max-width: 100%;
+                height: auto;
+                filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+            }
+            
+            .captcha-hint {
+                font-size: 0.85rem;
+                color: #666;
+                font-style: italic;
+                margin: 10px 0 0 0;
             }
             
             .captcha-feedback.loading {
