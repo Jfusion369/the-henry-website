@@ -7,12 +7,26 @@
     <link rel="stylesheet" href="styles/styles.css">
     <style>
         .rooted-salon-header {
-            background: #7A8B82 !important;
+            background: linear-gradient(135deg, #7A8B82 0%, #6B7B73 50%, #A0634D 100%) !important;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 30px 20px;
             min-height: 250px;
+            box-shadow: 0 4px 12px rgba(122, 139, 130, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .rooted-salon-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 50%, rgba(160, 99, 77, 0.15), transparent 50%);
+            pointer-events: none;
         }
         
         .rooted-salon-header .header-inner {
@@ -27,6 +41,16 @@
             height: auto;
             max-height: 400px;
             object-fit: contain;
+            /* Color blend effect with header */
+            filter: drop-shadow(0 3px 6px rgba(122, 139, 130, 0.3)) brightness(1.05);
+            transition: filter 0.3s ease, transform 0.3s ease;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .rooted-logo-header:hover {
+            filter: drop-shadow(0 5px 10px rgba(160, 99, 77, 0.4)) brightness(1.1);
+            transform: scale(1.02);
         }
         
         @media (max-width: 768px) {
@@ -47,13 +71,14 @@
         
         /* Rooted Salon Custom Styling */
         .rs-hero {
-            background: linear-gradient(135deg, rgba(122, 139, 130, 0.9) 0%, rgba(140, 155, 147, 0.9) 80%);
+            background: linear-gradient(135deg, rgba(122, 139, 130, 0.95) 0%, rgba(140, 155, 147, 0.9) 50%, rgba(160, 99, 77, 0.85) 100%);
             color: #f5f5f5;
             padding: 40px 20px;
             text-align: center;
             margin: 30px auto;
             border-radius: 12px;
             max-width: 95%;
+            box-shadow: inset 0 2px 8px rgba(0,0,0,0.1), 0 4px 12px rgba(122, 139, 130, 0.25);
         }
         
         .rs-tagline {
@@ -65,12 +90,19 @@
         }
         
         .rs-section {
-            background: white;
+            background: linear-gradient(to right, rgba(160, 99, 77, 0.05) 0%, rgba(122, 139, 130, 0.02) 100%), white;
             border-left: 5px solid #A0634D;
+            border-right: 1px solid rgba(122, 139, 130, 0.2);
             padding: 30px;
             margin: 25px 0;
             border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            box-shadow: 0 2px 12px rgba(122, 139, 130, 0.15), inset 0 1px 0 rgba(255,255,255,0.8);
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
+        }
+        
+        .rs-section:hover {
+            box-shadow: 0 4px 16px rgba(160, 99, 77, 0.2), inset 0 1px 0 rgba(255,255,255,0.8);
+            transform: translateY(-2px);
         }
         
         .rs-section h3 {

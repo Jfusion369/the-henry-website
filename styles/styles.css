@@ -82,13 +82,15 @@ body {
 }
 
 header {
-    background: #9E1B32;
+    background: linear-gradient(135deg, #9E1B32 0%, #7A2E47 100%);
     color: rgb(255, 255, 255);
     padding: 20px 0;
     text-align: center;
     border-radius: 12px;
     margin: 20px auto;
     max-width: 95%;
+    box-shadow: 0 4px 12px rgba(158, 27, 50, 0.3);
+    position: relative;
 }
 
 .container {
@@ -109,6 +111,13 @@ h1.site-title {
     max-height: 400px;
     display: block;
     margin: 0 auto;
+    /* PNG color blending with header */
+    filter: drop-shadow(0 2px 4px rgba(158, 27, 50, 0.2));
+    transition: filter 0.3s ease;
+}
+
+.site-title-image:hover {
+    filter: drop-shadow(0 4px 8px rgba(158, 27, 50, 0.35));
 }
 
 @media (max-width: 720px) {
