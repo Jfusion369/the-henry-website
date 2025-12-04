@@ -5,35 +5,39 @@
 
 /**
  * Add accessibility-specific headers
+ * Only apply security headers to HTML and API requests, not static assets
  */
 function accessibilityHeaders(req, res, next) {
-  // Enable content security policy
-  res.setHeader('Content-Security-Policy', [
-    "default-src 'self'",
-    "script-src 'self' 'unsafe-inline'",
-    "style-src 'self' 'unsafe-inline'",
-    "img-src 'self' data:",
-    "font-src 'self'",
-    "frame-ancestors 'none'"
-  ].join('; '));
+  // Skip security headers for static assets (CSS, JS, fonts, images, etc.)
+  if (!req.path.match(/\.(css|js|woff|woff2|ttf|eot|png|jpg|jpeg|gif|svg|ico)$/i)) {
+    // Enable content security policy only for HTML and API
+    res.setHeader('Content-Security-Policy', [
+      "default-src 'self'",
+      "script-src 'self' 'unsafe-inline'",
+      "style-src 'self' 'unsafe-inline'",
+      "img-src 'self' data:",
+      "font-src 'self'",
+      "frame-ancestors 'none'"
+    ].join('; '));
+    
+    // Require HTTPS and enable HSTS
+    res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains; preload');
+    
+    // Disable framing
+    res.setHeader('X-Frame-Options', 'DENY');
+    
+    // Set referrer policy
+    res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+    
+    // Feature-Policy / Permissions-Policy
+    res.setHeader('Permissions-Policy', 'geolocation=(), microphone=(), camera=()');
+  }
   
-  // Require HTTPS and enable HSTS
-  res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains; preload');
-  
-  // Disable framing
-  res.setHeader('X-Frame-Options', 'DENY');
-  
-  // Prevent MIME type sniffing
+  // Prevent MIME type sniffing (safe for all responses)
   res.setHeader('X-Content-Type-Options', 'nosniff');
   
-  // Enable XSS protection
+  // Enable XSS protection (safe for all responses)
   res.setHeader('X-XSS-Protection', '1; mode=block');
-  
-  // Set referrer policy
-  res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
-  
-  // Feature-Policy / Permissions-Policy
-  res.setHeader('Permissions-Policy', 'geolocation=(), microphone=(), camera=()');
   
   next();
 }
