@@ -9,6 +9,10 @@ const bodyParser = require('body-parser');
 const contactRoutes = require('./routes/contact');
 const newsletterRoutes = require('./routes/newsletter');
 
+// Import middleware
+const { accessibilityHeaders, htmlAccessibilityHeaders, accessibilityAudit } = require('./middleware/accessibility');
+const { configureImageHeaders, imageEndpoint } = require('./middleware/imageOptimization');
+
 // Initialize Express app
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -21,6 +25,10 @@ app.use(helmet({
     noSniff: true,
     referrerPolicy: { policy: 'strict-origin-when-cross-origin' }
 }));
+
+// Apply accessibility middleware
+app.use(accessibilityHeaders);
+app.use(htmlAccessibilityHeaders);
 
 // Cache and security headers MUST come before everything
 app.use((req, res, next) => {
@@ -102,6 +110,12 @@ app.get('/api/health', (req, res) => {
         timestamp: new Date().toISOString()
     });
 });
+
+// Accessibility audit endpoint
+app.get('/api/accessibility/audit', accessibilityAudit);
+
+// Image metadata endpoint
+app.get('/api/images/:imageId', configureImageHeaders, imageEndpoint);
 
 // API Routes
 app.use('/api', contactRoutes);
