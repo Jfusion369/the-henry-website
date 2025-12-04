@@ -3,13 +3,14 @@ const { body, validationResult } = require('express-validator');
 const Contact = require('../models/Contact');
 const { sendContactNotification } = require('../config/email');
 const { generateCaptcha, verifyCaptcha, isCaptchaVerified, checkRateLimit, getClientIp } = require('../utils/captcha');
-const { generateVisualQuestion, verifyVisualAnswer, isVisualQuestionVerified } = require('../utils/visual-security');
+// Visual security module temporarily disabled for stability - fallback to math CAPTCHA
+// const { generateVisualQuestion, verifyVisualAnswer, isVisualQuestionVerified } = require('../utils/visual-security');
 
 const router = express.Router();
 
 /**
  * GET /api/captcha/generate
- * Generate a new VISUAL security question (enhanced version)
+ * Generate a new MATH captcha (stable version)
  */
 router.get('/captcha/generate', (req, res) => {
     try {
@@ -25,21 +26,18 @@ router.get('/captcha/generate', (req, res) => {
             });
         }
         
-        // Generate visual question (enhanced security)
-        const visualQuestion = generateVisualQuestion();
-        console.log(`🖼️ Visual security question generated for IP ${clientIp}`);
+        // Generate math captcha (stable version)
+        const captcha = generateCaptcha();
+        console.log(`🔐 Math captcha generated for IP ${clientIp}`);
         
         res.json({
             success: true,
-            captchaId: visualQuestion.sessionId,
-            question: visualQuestion.question,
-            hint: visualQuestion.hint,
-            type: visualQuestion.type,
-            imageSvg: visualQuestion.imageSvg,
-            isVisual: true
+            captchaId: captcha.captchaId,
+            question: captcha.question,
+            isVisual: false
         });
     } catch (error) {
-        console.error('❌ Error generating visual question:', error);
+        console.error('❌ Error generating captcha:', error);
         res.status(500).json({
             success: false,
             message: 'Error generating security question'
@@ -49,7 +47,7 @@ router.get('/captcha/generate', (req, res) => {
 
 /**
  * POST /api/captcha/verify
- * Verify visual question answer (enhanced version)
+ * Verify math captcha answer (stable version)
  */
 router.post('/captcha/verify', [
     body('captchaId').notEmpty().withMessage('Captcha ID is required'),
@@ -66,20 +64,8 @@ router.post('/captcha/verify', [
         
         const { captchaId, answer } = req.body;
         
-        // Try to verify as visual question first (new enhanced security)
-        const visualResult = verifyVisualAnswer(captchaId, answer);
-        if (visualResult.success !== undefined) {
-            return res.json({
-                success: visualResult.success,
-                message: visualResult.message,
-                verified: visualResult.verified,
-                attemptsRemaining: visualResult.attemptsRemaining,
-                isVisual: true
-            });
-        }
-        
-        // Fall back to math captcha (legacy support)
-        const result = verifyCaptcha(captchaId, answer);
+        // Verify math captcha
+        const result = verifyCaptcha(captchaId, parseInt(answer));
         
         res.json({
             success: result.success,
@@ -134,12 +120,11 @@ router.post('/contact', [
             });
         }
         
-        // Verify security question (visual or math)
+        // Verify security question (math captcha only)
         const { captchaId } = req.body;
-        const isVisualVerified = isVisualQuestionVerified(captchaId);
         const isMathVerified = isCaptchaVerified(captchaId);
         
-        if (!isVisualVerified && !isMathVerified) {
+        if (!isMathVerified) {
             console.warn(`⚠️ Security verification failed for submission: ${captchaId}`);
             return res.status(400).json({
                 success: false,
@@ -147,7 +132,7 @@ router.post('/contact', [
             });
         }
 
-        console.log(`✅ ${isVisualVerified ? 'Visual' : 'Math'} security verified, proceeding with submission...`);
+        console.log(`✅ Math captcha verified, proceeding with submission...`);
         
         // Remove captchaId from contact record before saving
         const contactData = { ...req.body };

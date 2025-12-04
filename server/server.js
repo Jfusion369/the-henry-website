@@ -148,9 +148,31 @@ app.use((err, req, res, next) => {
     });
 });
 
-// Start server
-app.listen(PORT, () => {
+// Start server with proper error handling
+const server = app.listen(PORT, () => {
     console.log(`🚀 The Henry Backend Server running on http://localhost:${PORT}`);
     console.log(`📧 Email service: ${process.env.EMAIL_SERVICE || 'not configured'}`);
     console.log(`💾 Database: ${process.env.DATABASE_URL || './data/contacts.db'}`);
+});
+
+// Handle uncaught exceptions
+process.on('uncaughtException', (error) => {
+    console.error('❌ FATAL: Uncaught Exception:', error);
+    console.error(error.stack);
+    process.exit(1);
+});
+
+// Handle unhandled promise rejections
+process.on('unhandledRejection', (reason, promise) => {
+    console.error('❌ FATAL: Unhandled Rejection at:', promise, 'reason:', reason);
+    process.exit(1);
+});
+
+// Graceful shutdown
+process.on('SIGINT', () => {
+    console.log('\n📴 Shutting down gracefully...');
+    server.close(() => {
+        console.log('✅ Server closed');
+        process.exit(0);
+    });
 });
