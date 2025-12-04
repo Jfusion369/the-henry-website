@@ -30,7 +30,7 @@ let scrollTimeout = null;
 let isScrolling = false;
 
 if (navDesktop) {
-  window.addEventListener('scroll', () => {
+  const handleScroll = () => {
     const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
     
     // Show nav when at top
@@ -52,7 +52,17 @@ if (navDesktop) {
     }
     
     lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
-  }, false);
+  };
+
+  // Use requestAnimationFrame for throttled scroll performance
+  window.addEventListener('scroll', () => {
+    if (scrollTimeout) return;
+    
+    scrollTimeout = requestAnimationFrame(() => {
+      handleScroll();
+      scrollTimeout = null;
+    });
+  }, { passive: true });
   
   // Add click handlers to nav links to auto-hide after click
   navDesktop.querySelectorAll('a').forEach(link => {
@@ -96,7 +106,7 @@ window.addEventListener('load', () => {
 // Stagger animation for table rows
 const tableRows = document.querySelectorAll('table tr');
 tableRows.forEach((row, index) => {
-  row.style.animationDelay = `${index * 0.1}s`;
+  row.style.setProperty('--delay', `${index * 0.1}s`);
   row.classList.add('stagger-animate');
 });
 
@@ -110,15 +120,16 @@ tableRows.forEach((row) => {
   });
 });
 
-// Smooth scroll for anchor links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-  anchor.addEventListener('click', function (e) {
+// Smooth scroll for anchor links - using event delegation for better performance
+document.addEventListener('click', (e) => {
+  const anchor = e.target.closest('a[href^="#"]');
+  if (anchor) {
     e.preventDefault();
-    const target = document.querySelector(this.getAttribute('href'));
+    const target = document.querySelector(anchor.getAttribute('href'));
     if (target) {
       target.scrollIntoView({ behavior: 'smooth' });
     }
-  });
+  }
 });
 
 /* ===== API CONFIGURATION ===== */
@@ -138,6 +149,22 @@ const contactForm = document.getElementById('contactForm');
 if (contactForm) {
   console.log('✅ Contact form found');
   
+  // Cache frequently accessed DOM elements
+  const contactElements = {
+    form: contactForm,
+    nameInput: document.getElementById('contactName'),
+    emailInput: document.getElementById('contactEmail'),
+    phoneInput: document.getElementById('contactPhone'),
+    subjectInput: document.getElementById('contactSubject'),
+    messageInput: document.getElementById('contactMessage'),
+    captchaQuestion: document.getElementById('captchaQuestion'),
+    captchaAnswer: document.getElementById('captchaAnswer'),
+    verifyCaptchaBtn: document.getElementById('verifyCaptchaBtn'),
+    captchaFeedback: document.getElementById('captchaFeedback'),
+    captchaBox: document.querySelector('.captcha-box'),
+    submitBtn: document.getElementById('submitContactBtn')
+  };
+  
   let currentCaptchaId = null;
   let captchaVerified = false;
   
@@ -153,13 +180,13 @@ if (contactForm) {
       
       if (data.success) {
         currentCaptchaId = data.captchaId;
-        document.getElementById('captchaQuestion').innerHTML = `<p>${data.question}</p>`;
-        document.getElementById('captchaAnswer').disabled = false;
-        document.getElementById('verifyCaptchaBtn').disabled = false;
-        document.getElementById('captchaFeedback').textContent = '';
-        document.getElementById('captchaFeedback').classList.remove('show', 'success', 'error', 'loading');
+        contactElements.captchaQuestion.innerHTML = `<p>${data.question}</p>`;
+        contactElements.captchaAnswer.disabled = false;
+        contactElements.verifyCaptchaBtn.disabled = false;
+        contactElements.captchaFeedback.textContent = '';
+        contactElements.captchaFeedback.classList.remove('show', 'success', 'error', 'loading');
         captchaVerified = false;
-        document.getElementById('submitContactBtn').disabled = true;
+        contactElements.submitBtn.disabled = true;
         console.log(`🔐 Math captcha generated: ${currentCaptchaId}`);
       } else {
         showCaptchaFeedback(data.message || 'Error generating captcha', 'error');
@@ -172,10 +199,10 @@ if (contactForm) {
   }
   
   // Verify captcha answer
-  document.getElementById('verifyCaptchaBtn').addEventListener('click', async function(e) {
+  contactElements.verifyCaptchaBtn.addEventListener('click', async function(e) {
     e.preventDefault();
     
-    const answer = document.getElementById('captchaAnswer').value;
+    const answer = contactElements.captchaAnswer.value;
     
     if (!answer) {
       showCaptchaFeedback('Please enter your answer', 'error');
@@ -201,17 +228,17 @@ if (contactForm) {
       
       if (data.success) {
         showCaptchaFeedback('✓ Verified! You can now submit the form.', 'success');
-        document.querySelector('.captcha-box').classList.add('verified');
-        document.querySelector('.captcha-box').classList.remove('error');
+        contactElements.captchaBox.classList.add('verified');
+        contactElements.captchaBox.classList.remove('error');
         captchaVerified = true;
-        document.getElementById('submitContactBtn').disabled = false;
-        document.getElementById('captchaAnswer').disabled = true;
+        contactElements.submitBtn.disabled = false;
+        contactElements.captchaAnswer.disabled = true;
         this.disabled = true;
         console.log('✅ Math captcha verified successfully');
       } else {
         showCaptchaFeedback(data.message || 'Incorrect answer', 'error');
-        document.querySelector('.captcha-box').classList.add('error');
-        document.querySelector('.captcha-box').classList.remove('verified');
+        contactElements.captchaBox.classList.add('error');
+        contactElements.captchaBox.classList.remove('verified');
         this.disabled = false;
         console.warn('❌ Captcha verification failed:', data);
       }
@@ -223,9 +250,8 @@ if (contactForm) {
   });
   
   function showCaptchaFeedback(message, type) {
-    const feedbackDiv = document.getElementById('captchaFeedback');
-    feedbackDiv.textContent = message;
-    feedbackDiv.className = `captcha-feedback show ${type}`;
+    contactElements.captchaFeedback.textContent = message;
+    contactElements.captchaFeedback.className = `captcha-feedback show ${type}`;
   }
   
   // Initialize captcha when form is ready
@@ -254,11 +280,11 @@ if (contactForm) {
       submitButton.textContent = 'Sending...';
       
       const formData = {
-        name: document.getElementById('contactName').value,
-        email: document.getElementById('contactEmail').value,
-        phone: document.getElementById('contactPhone').value || '',
-        subject: document.getElementById('contactSubject').value || '',
-        message: document.getElementById('contactMessage').value,
+        name: contactElements.nameInput.value,
+        email: contactElements.emailInput.value,
+        phone: contactElements.phoneInput.value || '',
+        subject: contactElements.subjectInput.value || '',
+        message: contactElements.messageInput.value,
         captchaId: currentCaptchaId
       };
       
@@ -281,10 +307,10 @@ if (contactForm) {
         showNotification('Thank you! Your message has been sent successfully.', 'success');
         contactForm.reset();
         captchaVerified = false;
-        document.querySelector('.captcha-box').classList.remove('verified', 'error');
-        document.getElementById('submitContactBtn').disabled = true;
-        document.getElementById('captchaAnswer').disabled = false;
-        document.getElementById('verifyCaptchaBtn').disabled = false;
+        contactElements.captchaBox.classList.remove('verified', 'error');
+        contactElements.submitBtn.disabled = true;
+        contactElements.captchaAnswer.disabled = false;
+        contactElements.verifyCaptchaBtn.disabled = false;
         // Regenerate new captcha for next submission
         initializeCaptcha();
       } else {
@@ -306,12 +332,19 @@ if (contactForm) {
 
 const newsletterForm = document.getElementById('newsletter-form');
 if (newsletterForm) {
+  // Cache newsletter form elements
+  const newsletterElements = {
+    form: newsletterForm,
+    emailInput: document.getElementById('newsletter-email'),
+    submitBtn: newsletterForm.querySelector('button[type="submit"]'),
+    messageDiv: document.getElementById('newsletter-message')
+  };
+  
   newsletterForm.addEventListener('submit', async function(e) {
     e.preventDefault();
     
-    const email = document.getElementById('newsletter-email').value;
-    const messageDiv = document.getElementById('newsletter-message');
-    const submitButton = this.querySelector('button[type="submit"]');
+    const email = newsletterElements.emailInput.value;
+    const submitButton = newsletterElements.submitBtn;
     const originalButtonText = submitButton.textContent;
     
     try {
@@ -329,22 +362,22 @@ if (newsletterForm) {
       const data = await response.json();
       
       if (data.success) {
-        messageDiv.textContent = '✓ Thanks for subscribing! Check your email for confirmation.';
-        messageDiv.className = 'newsletter-message success';
+        newsletterElements.messageDiv.textContent = '✓ Thanks for subscribing! Check your email for confirmation.';
+        newsletterElements.messageDiv.className = 'newsletter-message success';
         newsletterForm.reset();
         
         setTimeout(() => {
-          messageDiv.textContent = '';
-          messageDiv.className = '';
+          newsletterElements.messageDiv.textContent = '';
+          newsletterElements.messageDiv.className = '';
         }, 5000);
       } else {
-        messageDiv.textContent = data.message || 'Error subscribing. Please try again.';
-        messageDiv.className = 'newsletter-message error';
+        newsletterElements.messageDiv.textContent = data.message || 'Error subscribing. Please try again.';
+        newsletterElements.messageDiv.className = 'newsletter-message error';
       }
     } catch (error) {
       console.error('Newsletter subscription error:', error);
-      messageDiv.textContent = 'Error subscribing. Please try again later.';
-      messageDiv.className = 'newsletter-message error';
+      newsletterElements.messageDiv.textContent = 'Error subscribing. Please try again later.';
+      newsletterElements.messageDiv.className = 'newsletter-message error';
     } finally {
       submitButton.disabled = false;
       submitButton.textContent = originalButtonText;
@@ -352,103 +385,52 @@ if (newsletterForm) {
   });
 }
 
-/* ===== NOTIFICATION HELPER ===== */
+/* ===== NOTIFICATION MANAGER - UNIFIED NOTIFICATION SYSTEM ===== */
 
+const notificationManager = {
+  show(message, type = 'success', duration = 4000) {
+    const div = document.createElement('div');
+    div.className = `notification notification-${type}`;
+    div.textContent = message;
+    
+    document.body.appendChild(div);
+    
+    // Use requestAnimationFrame for better performance
+    requestAnimationFrame(() => {
+      setTimeout(() => {
+        div.classList.add('notification-exit');
+        setTimeout(() => div.remove(), 300);
+      }, duration);
+    });
+  },
+  
+  success: (msg, duration = 4000) => notificationManager.show(msg, 'success', duration),
+  error: (msg, duration = 4000) => notificationManager.show(msg, 'error', duration),
+  call: (phone) => notificationManager.show(`📞 Calling ${phone}...`, 'success', 3000),
+  email: (email) => notificationManager.show(`📧 Opening email to ${email}...`, 'error', 3000)
+};
+
+// Alias for legacy code compatibility
 function showNotification(message, type = 'success') {
-  const notificationDiv = document.createElement('div');
-  notificationDiv.className = `notification notification-${type}`;
-  notificationDiv.textContent = message;
-  notificationDiv.style.cssText = `
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    background: ${type === 'success' ? '#2f8f55' : '#d32f2f'};
-    color: white;
-    padding: 15px 25px;
-    border-radius: 8px;
-    font-weight: 600;
-    z-index: 10000;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    animation: slideInDown 0.3s ease-out;
-    max-width: 90%;
-  `;
-  
-  document.body.appendChild(notificationDiv);
-  
-  setTimeout(() => {
-    notificationDiv.style.animation = 'slideOutUp 0.3s ease-out';
-    setTimeout(() => notificationDiv.remove(), 300);
-  }, 4000);
+  notificationManager.show(message, type);
 }
 
-/* ===== CTA BUTTON CALL REMINDER ===== */
+/* ===== CTA BUTTON HANDLERS ===== */
 
 // Add click handlers to phone/call buttons
-document.querySelectorAll('a[href^="tel:"]').forEach(callButton => {
-  callButton.addEventListener('click', function(e) {
-    // Show a visual reminder/confirmation
-    const phoneNumber = this.getAttribute('href').replace('tel:', '');
-    
-    // Create and show a reminder notification
-    const reminderDiv = document.createElement('div');
-    reminderDiv.className = 'call-reminder';
-    reminderDiv.textContent = `📞 Calling ${phoneNumber}...`;
-    reminderDiv.style.cssText = `
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: #2f8f55;
-      color: white;
-      padding: 15px 25px;
-      border-radius: 8px;
-      font-weight: 600;
-      z-index: 10000;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-      animation: slideInUp 0.3s ease-out;
-    `;
-    
-    document.body.appendChild(reminderDiv);
-    
-    // Remove reminder after 3 seconds
-    setTimeout(() => {
-      reminderDiv.style.animation = 'slideOutDown 0.3s ease-out';
-      setTimeout(() => reminderDiv.remove(), 300);
-    }, 3000);
-  });
+document.addEventListener('click', (e) => {
+  const callButton = e.target.closest('a[href^="tel:"]');
+  if (callButton) {
+    const phoneNumber = callButton.getAttribute('href').replace('tel:', '');
+    notificationManager.call(phoneNumber);
+  }
 });
 
-/* ===== CTA BUTTON EMAIL REMINDER ===== */
-
 // Add click handlers to email buttons
-document.querySelectorAll('a[href^="mailto:"]').forEach(emailButton => {
-  emailButton.addEventListener('click', function(e) {
-    // Show a visual reminder/confirmation
-    const emailAddress = this.getAttribute('href').replace('mailto:', '').split('?')[0];
-    
-    // Create and show a reminder notification
-    const reminderDiv = document.createElement('div');
-    reminderDiv.className = 'email-reminder';
-    reminderDiv.textContent = `📧 Opening email to ${emailAddress}...`;
-    reminderDiv.style.cssText = `
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: #9E1B32;
-      color: white;
-      padding: 15px 25px;
-      border-radius: 8px;
-      font-weight: 600;
-      z-index: 10000;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-      animation: slideInUp 0.3s ease-out;
-    `;
-    
-    document.body.appendChild(reminderDiv);
-    
-    // Remove reminder after 3 seconds
-    setTimeout(() => {
-      reminderDiv.style.animation = 'slideOutDown 0.3s ease-out';
-      setTimeout(() => reminderDiv.remove(), 300);
-    }, 3000);
-  });
+document.addEventListener('click', (e) => {
+  const emailButton = e.target.closest('a[href^="mailto:"]');
+  if (emailButton) {
+    const emailAddress = emailButton.getAttribute('href').replace('mailto:', '').split('?')[0];
+    notificationManager.email(emailAddress);
+  }
 });

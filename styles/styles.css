@@ -1,3 +1,18 @@
+:root {
+  --color-primary: #9E1B32;
+  --color-success: #2f8f55;
+  --color-error: #d32f2f;
+  --color-secondary: #708090;
+  --color-text: #050505;
+  --color-light-text: #666;
+  --color-light-bg: #f9f9f9;
+  --color-white: white;
+  --shadow-sm: 0 2px 4px rgba(0,0,0,0.1);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.15);
+  --radius-md: 8px;
+  --radius-lg: 12px;
+}
+
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -353,7 +368,7 @@ header.animate-in {
 
 /* Stagger animation for table rows */
 table tr.stagger-animate {
-  animation: slideInLeft 0.5s ease-out forwards;
+  animation: slideInLeft 0.5s ease-out var(--delay, 0s) forwards;
 }
 
 /* Owner card hover effect */
@@ -877,6 +892,60 @@ footer .container {
     line-height: 1.7;
 }
 
+/* ===== NOTIFICATION STYLES ===== */
+
+.notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 15px 25px;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  z-index: 10000;
+  box-shadow: var(--shadow-md);
+  animation: slideInDown 0.3s ease-out;
+  max-width: 90%;
+  color: var(--color-white);
+}
+
+.notification-success {
+  background: var(--color-success);
+}
+
+.notification-error {
+  background: var(--color-error);
+}
+
+.notification-exit {
+  animation: slideOutUp 0.3s ease-out !important;
+}
+
+.call-reminder,
+.email-reminder {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 15px 25px;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  z-index: 10000;
+  box-shadow: var(--shadow-md);
+  animation: slideInUp 0.3s ease-out;
+  color: var(--color-white);
+}
+
+.call-reminder {
+  background: var(--color-success);
+}
+
+.email-reminder {
+  background: var(--color-primary);
+}
+
+.reminder-exit {
+  animation: slideOutDown 0.3s ease-out !important;
+}
+
 /* ===== NOTIFICATION ANIMATIONS ===== */
 
 @keyframes slideInDown {
@@ -899,18 +968,6 @@ footer .container {
         transform: translateY(-100%);
         opacity: 0;
     }
-}
-
-.notification {
-    animation: slideInDown 0.3s ease-out !important;
-}
-
-.notification-success {
-    background: #2f8f55 !important;
-}
-
-.notification-error {
-    background: #d32f2f !important;
 }
 
 @media (max-width: 720px) {
