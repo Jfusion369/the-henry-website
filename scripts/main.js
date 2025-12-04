@@ -22,6 +22,69 @@ sidebar.querySelectorAll('a').forEach(link => {
   link.addEventListener('click', closeMenu);
 });
 
+/* ===== ACCESSIBILITY ENHANCEMENTS ===== */
+
+// Add ARIA labels to navigation elements
+document.querySelector('.nav-desktop')?.setAttribute('aria-label', 'Main navigation');
+sidebar.setAttribute('aria-label', 'Mobile navigation');
+
+// Ensure hamburger button has proper ARIA
+hamburger.setAttribute('role', 'button');
+hamburger.setAttribute('aria-label', 'Toggle navigation menu');
+hamburger.setAttribute('aria-expanded', 'false');
+hamburger.setAttribute('tabindex', '0');
+
+// Update ARIA when menu toggles
+const menuObserver = new MutationObserver(() => {
+  hamburger.setAttribute('aria-expanded', hamburger.classList.contains('active') ? 'true' : 'false');
+});
+
+menuObserver.observe(hamburger, { attributes: true, attributeFilter: ['class'] });
+
+// Add keyboard support to hamburger (Enter/Space to toggle)
+hamburger.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' || e.key === ' ') {
+    e.preventDefault();
+    toggleMenu();
+  }
+});
+
+// Add keyboard support to sidebar links (Escape to close)
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && sidebar.classList.contains('active')) {
+    closeMenu();
+  }
+});
+
+/* ===== LAZY LOADING IMAGE ENHANCEMENT ===== */
+
+// Add loaded class when lazy images finish loading
+document.querySelectorAll('img[loading="lazy"]').forEach(img => {
+  img.addEventListener('load', function() {
+    this.classList.add('loaded');
+  });
+});
+
+// Fallback for browsers without native lazy loading support
+if (!('loading' in HTMLImageElement.prototype)) {
+  const imageObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const img = entry.target;
+        if (img.dataset.src) {
+          img.src = img.dataset.src;
+        }
+        img.classList.add('loaded');
+        observer.unobserve(img);
+      }
+    });
+  }, { rootMargin: '50px' });
+  
+  document.querySelectorAll('img[loading="lazy"]').forEach(img => {
+    imageObserver.observe(img);
+  });
+}
+
 /* ===== DESKTOP NAVIGATION AUTO-RETRACT ===== */
 
 const navDesktop = document.querySelector('.nav-desktop');
