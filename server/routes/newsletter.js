@@ -2,17 +2,30 @@ const express = require('express');
 const { body, validationResult } = require('express-validator');
 const Newsletter = require('../models/Newsletter');
 const { sendNewsletterConfirmation } = require('../config/email');
+const { checkRateLimit, getClientIp } = require('../utils/captcha');
 
 const router = express.Router();
 
 /**
  * POST /api/newsletter/subscribe
- * Subscribe email to newsletter
+ * Subscribe email to newsletter (with rate limiting)
  */
 router.post('/subscribe', [
     body('email').isEmail().withMessage('Valid email is required')
 ], async (req, res) => {
     try {
+        const clientIp = getClientIp(req);
+        
+        // Check rate limit
+        const rateLimit = checkRateLimit(clientIp, 'newsletter');
+        if (!rateLimit.allowed) {
+            console.warn(`⚠️ Newsletter subscription rate limit exceeded for IP ${clientIp}`);
+            return res.status(429).json({
+                success: false,
+                message: rateLimit.message
+            });
+        }
+        
         // Check for validation errors
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
@@ -57,12 +70,24 @@ router.post('/subscribe', [
 
 /**
  * POST /api/newsletter/unsubscribe
- * Unsubscribe email from newsletter
+ * Unsubscribe email from newsletter (with rate limiting)
  */
 router.post('/unsubscribe', [
     body('email').isEmail().withMessage('Valid email is required')
 ], async (req, res) => {
     try {
+        const clientIp = getClientIp(req);
+        
+        // Check rate limit
+        const rateLimit = checkRateLimit(clientIp, 'newsletter');
+        if (!rateLimit.allowed) {
+            console.warn(`⚠️ Newsletter unsubscribe rate limit exceeded for IP ${clientIp}`);
+            return res.status(429).json({
+                success: false,
+                message: rateLimit.message
+            });
+        }
+        
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             return res.status(400).json({ 

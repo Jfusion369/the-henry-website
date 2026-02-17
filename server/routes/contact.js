@@ -3,6 +3,7 @@ const { body, validationResult } = require('express-validator');
 const Contact = require('../models/Contact');
 const { sendContactNotification } = require('../config/email');
 const { generateCaptcha, verifyCaptcha, isCaptchaVerified, checkRateLimit, getClientIp } = require('../utils/captcha');
+const { verifyToken } = require('../middleware/auth');
 // Visual security module temporarily disabled for stability - fallback to math CAPTCHA
 // const { generateVisualQuestion, verifyVisualAnswer, isVisualQuestionVerified } = require('../utils/visual-security');
 
@@ -12,12 +13,12 @@ const router = express.Router();
  * GET /api/captcha/generate
  * Generate a new MATH captcha (stable version)
  */
-router.get('/captcha/generate', (req, res) => {
+router.get('/captcha/generate', async (req, res) => {
     try {
         const clientIp = getClientIp(req);
         
         // Check rate limit for captcha requests
-        const rateLimit = checkRateLimit(clientIp, 'captcha');
+        const rateLimit = await checkRateLimit(clientIp, 'captcha');
         if (!rateLimit.allowed) {
             console.warn(`⚠️ Rate limit exceeded for IP ${clientIp}`);
             return res.status(429).json({
@@ -170,11 +171,20 @@ router.post('/contact', [
 
 /**
  * GET /api/contact/:id
- * Get contact by ID (admin only)
+ * Get contact by ID (admin only - requires authentication)
  */
-router.get('/contact/:id', (req, res) => {
-    // This is a placeholder - implement authentication before using in production
+router.get('/contact/:id', verifyToken, (req, res) => {
     try {
+        // Verify user is authenticated
+        if (!req.user) {
+            return res.status(401).json({ 
+                success: false, 
+                message: 'Authentication required' 
+            });
+        }
+
+        console.log(`📖 Admin ${req.user.username} requesting contact ID: ${req.params.id}`);
+        
         Contact.getById(req.params.id)
             .then(contact => {
                 if (!contact) {
@@ -183,9 +193,11 @@ router.get('/contact/:id', (req, res) => {
                 res.json({ success: true, data: contact });
             })
             .catch(error => {
+                console.error('Error retrieving contact:', error);
                 res.status(500).json({ success: false, message: error.message });
             });
     } catch (error) {
+        console.error('Error:', error);
         res.status(500).json({ success: false, message: error.message });
     }
 });

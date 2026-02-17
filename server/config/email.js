@@ -1,5 +1,22 @@
 const nodemailer = require('nodemailer');
 
+/**
+ * Escape HTML special characters to prevent injection attacks
+ * @param {string} text
+ * @returns {string}
+ */
+function escapeHtml(text) {
+    if (!text) return '';
+    const map = {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#039;'
+    };
+    return text.replace(/[&<>"']/g, m => map[m]);
+}
+
 // Create transporter based on environment
 const transporter = nodemailer.createTransport({
     service: process.env.EMAIL_SERVICE || 'gmail',
@@ -9,12 +26,13 @@ const transporter = nodemailer.createTransport({
     }
 });
 
-// Verify connection
+// Verify connection (but silently ignore errors)
 transporter.verify((error, success) => {
     if (error) {
-        console.error('Email service not configured properly:', error);
-    } else {
-        console.log('Email service ready');
+        // Silently ignore email verification errors
+        // Email is optional for the system
+    } else if (success) {
+        console.log('✅ Email service ready');
     }
 });
 
@@ -32,15 +50,15 @@ async function sendContactNotification(contactData) {
         await transporter.sendMail({
             from: process.env.EMAIL_FROM,
             to: process.env.ADMIN_EMAIL,
-            subject: `New Contact Form Submission: ${contactData.subject || 'No Subject'}`,
+            subject: `New Contact Form Submission: ${escapeHtml(contactData.subject) || 'No Subject'}`,
             html: `
                 <h2>New Contact Form Submission</h2>
-                <p><strong>Name:</strong> ${contactData.name}</p>
-                <p><strong>Email:</strong> ${contactData.email}</p>
-                <p><strong>Phone:</strong> ${contactData.phone || 'Not provided'}</p>
-                <p><strong>Subject:</strong> ${contactData.subject || 'No subject'}</p>
+                <p><strong>Name:</strong> ${escapeHtml(contactData.name)}</p>
+                <p><strong>Email:</strong> ${escapeHtml(contactData.email)}</p>
+                <p><strong>Phone:</strong> ${escapeHtml(contactData.phone || 'Not provided')}</p>
+                <p><strong>Subject:</strong> ${escapeHtml(contactData.subject || 'No subject')}</p>
                 <p><strong>Message:</strong></p>
-                <p>${contactData.message.replace(/\n/g, '<br>')}</p>
+                <p>${escapeHtml(contactData.message).replace(/\n/g, '<br>')}</p>
                 <hr>
                 <p><small>Received at: ${new Date().toLocaleString()}</small></p>
             `
@@ -51,14 +69,14 @@ async function sendContactNotification(contactData) {
         // Confirmation email to user
         await transporter.sendMail({
             from: process.env.EMAIL_FROM,
-            to: contactData.email,
+            to: escapeHtml(contactData.email),
             subject: 'We received your message - The Henry',
             html: `
                 <h2>Thank you for contacting us!</h2>
-                <p>Hi ${contactData.name},</p>
+                <p>Hi ${escapeHtml(contactData.name)},</p>
                 <p>We have received your message and will get back to you shortly.</p>
                 <p><strong>Your message:</strong></p>
-                <p>${contactData.message.replace(/\n/g, '<br>')}</p>
+                <p>${escapeHtml(contactData.message).replace(/\n/g, '<br>')}</p>
                 <hr>
                 <p>Best regards,<br>The Henry Team</p>
             `
@@ -101,5 +119,6 @@ async function sendNewsletterConfirmation(email) {
 module.exports = {
     transporter,
     sendContactNotification,
-    sendNewsletterConfirmation
+    sendNewsletterConfirmation,
+    escapeHtml
 };

@@ -5,73 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Henry - Revitalizing Rural Main Street</title>
     <link rel="stylesheet" href="styles/styles.css">
-    <style>
-        .henry-header-title {
-            font-family: "Georgia", "Garamond", serif;
-            font-weight: bold;
-            letter-spacing: 2px,4px;
-        }
-        
-        /* Henry LLC Custom Styling */
-        .henry-hero {
-            background: linear-gradient(135deg, rgba(158, 27, 50, 0.9) 0%, rgba(47, 143, 85, 0.9) 100%);
-            color: #f5f5f5;
-            padding: 40px 20px;
-            text-align: center;
-            margin: 30px auto;
-            border-radius: 12px;
-            max-width: 95%;
-            display: block;
-            width: 100%;
-        }
-        
-        .henry-tagline {
-            font-family: "Georgia", "Garamond", serif;
-            font-size: 1.8em;
-            font-weight: bold;
-            color: #f5f5f5;
-            margin: 15px 0;
-            display: block;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
-        }
-        
-        .henry-section {
-            background: white;
-            border-left: 5px solid #9E1B32;
-            padding: 30px;
-            margin: 25px 0;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-            display: block;
-            width: 100%;
-        }
-        
-        .henry-section h3 {
-            color: #9E1B32;
-            font-size: 1.5em;
-            margin-top: 0;
-            margin-bottom: 15px;
-        }
-        
-        .henry-section p {
-            color: #333;
-            line-height: 1.7;
-            margin-bottom: 15px;
-        }
-        
-        /* Ensure hamburger stays visible on mobile */
-        @media (max-width: 720px) {
-            .hamburger {
-                z-index: 9999 !important;
-            }
-            .sidebar {
-                z-index: 9998 !important;
-            }
-            .overlay {
-                z-index: 9997 !important;
-            }
-        }
-    </style>
 </head>
 <body>
     <!-- Skip to content link for accessibility -->
@@ -86,13 +19,13 @@
 
     <!-- Sidebar navigation -->
     <nav class="sidebar" id="sidebar">
-        <a href="admin-login.html">Home</a>
+        <a href="index.html">Home</a>
         <a href="rooted-salon.html">Rooted Salon</a>
         <a href="fill-my-cup.html">Fill My Cup Cafe</a>
         <a href="market.html">Market</a>
         <a href="court-yard.html">Court Yard</a>
         <a href="events.html">Events</a>
-        <a href="admin-login.html#contact">Contact</a>
+        <a href="#contact">Contact</a>
     </nav>
 
     <!-- Dark overlay -->
@@ -101,19 +34,19 @@
     <!-- Desktop navigation -->
     <nav class="nav-desktop">
         <ul>
-            <li><a href="admin-login.html">Home</a></li>
+            <li><a href="index.html">Home</a></li>
             <li><a href="rooted-salon.html">Rooted Salon</a></li>
             <li><a href="fill-my-cup.html">Fill My Cup Cafe</a></li>
             <li><a href="market.html">Market</a></li>
             <li><a href="court-yard.html">Court Yard</a></li>
             <li><a href="events.html">Events</a></li>
-            <li><a href="admin-login.html#contact">Contact</a></li>
+            <li><a href="#contact">Contact</a></li>
         </ul>
     </nav>
 
     <header>
         <div class="container header-inner">
-            <img src="images/The-Henry-header.png" loading="lazy" alt="The Henry" class="site-title-image">
+            <img src="images/The_Henry_3.png" loading="lazy" alt="The Henry" class="site-title-image">
             <p class="site-subtitle">Revitalizing and Bolstering Rural Main Street in Henry County, Kentucky</p>
         </div>
     </header>
@@ -247,22 +180,22 @@
                 <!-- Location Section -->
                 <div class="footer-section">
                     <h3>Location</h3>
-                    <p style="margin: 0; line-height: 1.8; color: #ddd;">
+                    <p class="footer-paragraph">
                         The Henry<br>
                         10 Court Street<br>
                         New Castle, Kentucky<br>
                         <br>
-                        <a href="tel:(123) 456-7890" style="color: #9E1B32; font-weight: 600;">(123) 456-7890</a>
+                        <a href="tel:(123) 456-7890" class="footer-phone-link">(123) 456-7890</a>
                     </p>
                 </div>
             </div>
 
             <div class="footer-bottom">
                 <p>&copy; 2025 The Henry. All rights reserved.</p>
-                <p style="margin-top: 10px; font-size: 0.85em;">
-                    <a href="#" style="color: #999;">Privacy Policy</a> • 
-                    <a href="#" style="color: #999;">Terms of Service</a>
-                </p>
+                <div class="footer-links">
+                    <a href="#">Privacy Policy</a> • 
+                    <a href="#">Terms of Service</a>
+                </div>
             </div>
         </div>
     </footer>

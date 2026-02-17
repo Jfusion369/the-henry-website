@@ -1,5 +1,7 @@
 # Backend Setup Guide
 
+> For comprehensive deployment and project documentation, see [docs/](../docs/) folder
+
 ## Prerequisites
 - Node.js (v14 or higher)
 - npm

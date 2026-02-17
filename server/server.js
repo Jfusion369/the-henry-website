@@ -4,8 +4,14 @@ const cors = require('cors');
 const helmet = require('helmet');
 const path = require('path');
 const bodyParser = require('body-parser');
+const morgan = require('morgan');
+const rateLimit = require('express-rate-limit');
+
+// Import Redis configuration
+const { initRedis, closeRedis } = require('./config/redis');
 
 // Import routes
+const authRoutes = require('./routes/auth');
 const contactRoutes = require('./routes/contact');
 const newsletterRoutes = require('./routes/newsletter');
 
@@ -13,22 +19,109 @@ const newsletterRoutes = require('./routes/newsletter');
 const { accessibilityHeaders, htmlAccessibilityHeaders, accessibilityAudit } = require('./middleware/accessibility');
 const { configureImageHeaders, imageEndpoint } = require('./middleware/imageOptimization');
 
+// Validate required environment variables
+const requiredEnvVars = ['ADMIN_USERNAME', 'HASHED_ADMIN_PASSWORD', 'JWT_SECRET'];
+const missingEnvVars = requiredEnvVars.filter(varName => !process.env[varName]);
+
+if (missingEnvVars.length > 0) {
+  if (process.env.NODE_ENV === 'production') {
+    console.error('❌ FATAL: Missing required environment variables:', missingEnvVars);
+    process.exit(1);
+  } else {
+    console.warn('⚠️ WARNING: Missing environment variables:', missingEnvVars);
+  }
+}
+
 // Initialize Express app
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// HTTPS Redirect Middleware (for production)
+if (process.env.NODE_ENV === 'production') {
+  app.use((req, res, next) => {
+    // Handle reverse proxy X-Forwarded-Proto header (Heroku, AWS, etc.)
+    if (req.header('x-forwarded-proto') !== 'https') {
+      res.redirect(`https://${req.header('host')}${req.url}`);
+    } else {
+      next();
+    }
+  });
+}
+
+// Request Logging Middleware (morgan)
+app.use(morgan('combined', {
+  skip: (req, res) => {
+    // Skip logging for health checks and static files
+    return req.path === '/api/health' || req.path.match(/\.(js|css|png|jpg|gif|svg|woff|woff2)$/i);
+  }
+}));
+
+// Global API Rate Limiting (additional to per-endpoint limits)
+const apiLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // 100 requests per windowMs
+  message: 'Too many requests from this IP, please try again later.',
+  standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+  legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+  skip: (req, res) => {
+    // Skip rate limiting for health checks
+    return req.path === '/api/health';
+  }
+});
+
+// Apply global rate limiter to all /api routes
+app.use('/api/', apiLimiter);
+
 // Middleware - ORDER MATTERS!
 app.use(helmet({
-    contentSecurityPolicy: false,
+    contentSecurityPolicy: {
+        directives: {
+            defaultSrc: ["'self'"],
+            scriptSrc: ["'self'", "'unsafe-inline'"],
+            styleSrc: ["'self'", "'unsafe-inline'"],
+            imgSrc: ["'self'", 'data:', 'https:'],
+            fontSrc: ["'self'"],
+            connectSrc: ["'self'"],
+            frameSrc: ["'self'"],
+            objectSrc: ["'none'"]
+        }
+    },
     frameguard: { action: 'SAMEORIGIN' },
     xssFilter: true,
     noSniff: true,
-    referrerPolicy: { policy: 'strict-origin-when-cross-origin' }
+    referrerPolicy: { policy: 'strict-origin-when-cross-origin' },
+    permissionsPolicy: {
+        geolocation: [],
+        microphone: [],
+        camera: [],
+        usb: [],
+        magnetometer: []
+    }
 }));
 
 // Apply accessibility middleware
 app.use(accessibilityHeaders);
 app.use(htmlAccessibilityHeaders);
+
+// Additional security headers
+app.use((req, res, next) => {
+    // HSTS: Force HTTPS for 1 year including subdomains
+    res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains; preload');
+    
+    // Prevent clickjacking
+    res.setHeader('X-Frame-Options', 'SAMEORIGIN');
+    
+    // Prevent MIME type sniffing
+    res.setHeader('X-Content-Type-Options', 'nosniff');
+    
+    // Prevent XSS attacks
+    res.setHeader('X-XSS-Protection', '1; mode=block');
+    
+    // Prevent cross-domain policies
+    res.setHeader('X-Permitted-Cross-Domain-Policies', 'none');
+    
+    next();
+});
 
 // Cache and security headers MUST come before everything
 app.use((req, res, next) => {
@@ -114,10 +207,8 @@ app.get('/api/health', (req, res) => {
 // Accessibility audit endpoint
 app.get('/api/accessibility/audit', accessibilityAudit);
 
-// Image metadata endpoint
-app.get('/api/images/:imageId', configureImageHeaders, imageEndpoint);
-
 // API Routes
+app.use('/api/auth', authRoutes);
 app.use('/api', contactRoutes);
 app.use('/api/newsletter', newsletterRoutes);
 
@@ -153,7 +244,7 @@ app.get('*', (req, res) => {
 
 // Error handling middleware
 app.use((err, req, res, next) => {
-    console.error('Server error:', err);
+    console.error('⚠️ Server error:', err.message || err);
     res.status(err.status || 500).json({
         success: false,
         message: process.env.NODE_ENV === 'production' 
@@ -163,30 +254,56 @@ app.use((err, req, res, next) => {
 });
 
 // Start server with proper error handling
-const server = app.listen(PORT, () => {
-    console.log(`🚀 The Henry Backend Server running on http://localhost:${PORT}`);
-    console.log(`📧 Email service: ${process.env.EMAIL_SERVICE || 'not configured'}`);
-    console.log(`💾 Database: ${process.env.DATABASE_URL || './data/contacts.db'}`);
+const server = app.listen(PORT, async () => {
+    try {
+        // Initialize Redis connection
+        await initRedis();
+        
+        console.log(`🚀 The Henry Backend Server running on http://localhost:${PORT}`);
+        console.log(`📧 Email service: ${process.env.EMAIL_SERVICE || 'not configured'}`);
+        console.log(`💾 Database: ${process.env.DATABASE_URL || './data/contacts.db'}`);
+        console.log(`🔐 Security: Redis-based rate limiting and session management enabled`);
+        console.log('✅ Server ready to accept connections');
+    } catch (error) {
+        console.error('❌ Failed to start server:', error.message);
+        // Don't exit - let the server continue
+    }
 });
 
-// Handle uncaught exceptions
+// Handle uncaught exceptions - log but keep running
 process.on('uncaughtException', (error) => {
-    console.error('❌ FATAL: Uncaught Exception:', error);
-    console.error(error.stack);
-    process.exit(1);
+    if (!error.message?.includes('ClientClosedError') && !error.message?.includes('EAUTH')) {
+        console.error('⚠️ Uncaught Exception:', error.message);
+    }
 });
 
-// Handle unhandled promise rejections
+// Handle unhandled promise rejections - log but don't crash
 process.on('unhandledRejection', (reason, promise) => {
-    console.error('❌ FATAL: Unhandled Rejection at:', promise, 'reason:', reason);
-    process.exit(1);
+    if (reason.code !== 'ECONNREFUSED' && !reason.message?.includes('ClientClosedError')) {
+        console.error('⚠️ Unhandled Rejection:', reason.message || reason);
+    }
 });
 
 // Graceful shutdown
-process.on('SIGINT', () => {
+process.on('SIGINT', async () => {
     console.log('\n📴 Shutting down gracefully...');
-    server.close(() => {
-        console.log('✅ Server closed');
-        process.exit(0);
-    });
+    try {
+        server.close(async () => {
+            try {
+                await closeRedis();
+            } catch (err) {
+                // Ignore Redis close errors
+            }
+            console.log('✅ Server closed');
+            process.exit(0);
+        });
+        // Force exit after 5 seconds if shutdown takes too long
+        setTimeout(() => {
+            console.log('⚠️ Force closing...');
+            process.exit(0);
+        }, 5000);
+    } catch (err) {
+        console.error('Error during shutdown:', err.message);
+        process.exit(1);
+    }
 });

@@ -6,6 +6,8 @@ echo ======================================
 echo The Henry - Backend Quick Start
 echo ======================================
 echo.
+echo Documentation: See docs\ folder for comprehensive guides
+echo.
 
 REM Check if Node.js is installed
 where node >nul 2>nul
