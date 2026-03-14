@@ -85,7 +85,7 @@ After 15 min:    ✅ Allowed (counter resets)
 // In production (NODE_ENV=production):
 // All HTTP requests automatically redirect to HTTPS
 // Handles reverse proxy headers (x-forwarded-proto)
-// Works with Heroku, AWS, DigitalOcean, Azure, etc.
+// Works with Heroku, AWS, Azure, etc.
 ```
 
 **Behavior:**
@@ -97,7 +97,6 @@ HTTPS → Pass through (OK)
 **Works With:**
 - ✅ Heroku (x-forwarded-proto)
 - ✅ AWS ELB/ALB (x-forwarded-proto)
-- ✅ DigitalOcean (x-forwarded-proto)
 - ✅ Azure (x-forwarded-proto)
 - ✅ Nginx reverse proxy
 - ✅ Any reverse proxy with x-forwarded-proto header
@@ -122,7 +121,6 @@ NODE_ENV=production
 **Action:** Follow platform-specific guide:
 - Heroku: Use paid dyno or Let's Encrypt add-on
 - AWS: Use AWS Certificate Manager
-- DigitalOcean: Use Let's Encrypt with Certbot
 - Azure: Use App Service Certificates
 - VPS: Use Let's Encrypt with Certbot
 
@@ -161,7 +159,6 @@ export JWT_SECRET="abc123def456..."
 1. **Use Managed Redis** (Recommended)
    - Heroku: Heroku Redis
    - AWS: ElastiCache
-   - DigitalOcean: Managed Redis
    - Azure: Azure Cache for Redis
 
 2. **Self-Hosted Redis**

@@ -45,10 +45,9 @@ Your Henry Website project now has **complete, comprehensive deployment document
 - **1-2 hours to complete**
 
 ### 4. **PLATFORM_DEPLOYMENT_GUIDES.md** 🚀
-- **5 complete deployment guides:**
+- **4 complete deployment guides:**
   - Heroku (easiest, 15 minutes)
   - AWS EC2 (full control)
-  - DigitalOcean (best balance)
   - Azure (enterprise)
   - VPS/Linode/Vultr (cheapest)
 
@@ -104,7 +103,6 @@ Choose one of 5 platforms from PLATFORM_DEPLOYMENT_GUIDES.md:
 | Platform | Time | Cost | Best For |
 |----------|------|------|----------|
 | **Heroku** | 15 min | $25+/mo | Fastest, easiest setup |
-| **DigitalOcean** | 30 min | $30+/mo | Best balance |
 | **AWS EC2** | 1-2 hrs | $5-20/mo | Most control |
 | **Azure** | 1 hr | $30+/mo | Enterprise |
 | **Vultr/Linode** | 1-2 hrs | $5-15/mo | Cheapest |
@@ -191,13 +189,6 @@ Use PRODUCTION_READINESS.md 15-phase checklist:
 - Cost: $25+/month
 - Pros: All-in-one, automatic SSL, easy deployments
 - Follow: PLATFORM_DEPLOYMENT_GUIDES.md → Heroku section
-
-### For Best Balance
-**DigitalOcean (Recommended)**
-- Time: 30 minutes
-- Cost: $30+/month
-- Pros: Easy + affordable + great support
-- Follow: PLATFORM_DEPLOYMENT_GUIDES.md → DigitalOcean section
 
 ### For Budget-Conscious
 **Vultr or Linode (Cheapest)**

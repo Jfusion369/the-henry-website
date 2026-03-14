@@ -17,7 +17,7 @@ This document summarizes all additional steps needed **before deploying to produ
 
 2. **[PLATFORM_DEPLOYMENT_GUIDES.md](PLATFORM_DEPLOYMENT_GUIDES.md)**
    - Step-by-step guides for each platform
-   - Heroku, AWS EC2, DigitalOcean, Azure, VPS
+   - Heroku, AWS EC2, Azure, VPS
    - Cost comparison
    - Best practices per platform
 
@@ -51,7 +51,6 @@ This document summarizes all additional steps needed **before deploying to produ
 
 4. **Choose Platform** (from PLATFORM_DEPLOYMENT_GUIDES.md)
    - Heroku (easiest)
-   - DigitalOcean (best balance)
    - AWS (most control)
    - Others...
 
@@ -263,7 +262,6 @@ done
 | Need | Platform | Time | Cost |
 |------|----------|------|------|
 | Easiest Setup | Heroku | 15 min | $25+/mo |
-| Best Value | DigitalOcean | 30 min | $30+/mo |
 | Most Control | AWS EC2 | 1-2 hrs | $5-20/mo |
 | Cheapest | Vultr/Linode | 1-2 hrs | $5-15/mo |
 | Enterprise | Azure | 1 hr | $30+/mo |

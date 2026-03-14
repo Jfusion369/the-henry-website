@@ -47,12 +47,11 @@
    - **Read time: 1-2 hours to complete**
 
 4. **PLATFORM_DEPLOYMENT_GUIDES.md** (Platform-Specific)
-   - **5 Complete Deployment Guides:**
+   - **4 Complete Deployment Guides:**
      1. Heroku (Easiest - 15 min)
      2. AWS EC2 (Full Control - 1-2 hrs)
-     3. DigitalOcean (Best Balance - 30 min)
-     4. Azure (Enterprise - 1 hr)
-     5. VPS/Linode/Vultr (Cheapest - 1-2 hrs)
+     3. Azure (Enterprise - 1 hr)
+     4. VPS/Linode/Vultr (Cheapest - 1-2 hrs)
 
    - **Nginx configuration included**
    - **SSL setup for each platform**
@@ -240,7 +239,6 @@
 ### Deployment
 ✅ Heroku deployment (15 min)
 ✅ AWS EC2 deployment (1-2 hrs)
-✅ DigitalOcean deployment (30 min)
 ✅ Azure deployment (1 hr)
 ✅ VPS deployment (1-2 hrs)
 ✅ Domain configuration

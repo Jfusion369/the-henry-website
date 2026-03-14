@@ -111,7 +111,6 @@ The project has **solid security foundations** with many industry best practices
 **For different platforms:**
 - **Heroku:** Auto-enabled with paid dyno or custom domain
 - **AWS:** Use AWS Certificate Manager (free)
-- **DigitalOcean:** Use Let's Encrypt via Certbot
 - **Azure:** Use App Service Certificates
 - **VPS:** Use Let's Encrypt via Certbot/acme.sh
 
@@ -140,7 +139,7 @@ node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
 **Recommendation:**
 - Use persistent Redis in production (not optional)
 - Or: Implement file-based fallback lockout mechanism
-- Or: Use managed Redis service (DigitalOcean, AWS, Heroku)
+- Or: Use managed Redis service (AWS, Heroku)
 
 ---
 

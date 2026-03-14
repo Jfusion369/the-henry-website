@@ -7,7 +7,10 @@
     "start": "node server.js",
     "dev": "nodemon server.js",
     "hash-password": "node bin/hash-password.js",
-    "migrate": "node migrate.js"
+    "migrate": "node migrate.js",
+    "test:deployment": "node deployment-test.js",
+    "test:deployment:prod": "node deployment-test.js https://thehenry.com",
+    "test:api": "node test-api.js"
   },
   "keywords": [
     "Henry",

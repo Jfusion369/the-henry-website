@@ -30,7 +30,7 @@
 - **[DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md)**
   - Pre-deployment checklist
   - Environment configuration
-  - Deployment options (Heroku, AWS, DigitalOcean, VPS)
+  - Deployment options (Heroku, AWS, VPS)
   - Post-deployment verification
   - Security best practices
   - **Read before deploying to production**

@@ -147,7 +147,7 @@ API Endpoints:
 5. Set NODE_ENV=production
 
 ### Production Deployment
-1. Choose hosting platform (Heroku, AWS, DigitalOcean, etc.)
+1. Choose hosting platform (Heroku, AWS, etc.)
 2. Configure domain and SSL
 3. Set environment variables
 4. Deploy application

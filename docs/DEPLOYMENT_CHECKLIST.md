@@ -56,8 +56,8 @@ Select one of these options:
 - [ ] **Heroku** (Classic choice, credit card required)
   - See: https://devcenter.heroku.com/
 
-- [ ] **AWS/DigitalOcean** (More control, more setup)
-  - See: Their respective documentation
+- [ ] **AWS** (More control, more setup)
+  - See: AWS documentation
 
 - [ ] **Self-hosted VPS** (Full control)
   - See: Your server provider's documentation

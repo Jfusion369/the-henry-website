@@ -52,7 +52,6 @@
 #### 3. **PLATFORM_DEPLOYMENT_GUIDES.md** 🚀 PLATFORM-SPECIFIC
 - Heroku (easiest, 15 minutes)
 - AWS EC2 (full control, 1-2 hours)
-- DigitalOcean (best balance, 30 minutes)
 - Azure (enterprise, 1 hour)
 - VPS (cheapest, 1-2 hours)
 - Comparison matrix

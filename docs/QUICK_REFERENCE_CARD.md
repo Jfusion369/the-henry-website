@@ -94,7 +94,6 @@ pm2 logs the-henry
 | If you want... | Choose... | Setup time |
 |---|---|---|
 | Easiest setup | Heroku | 15 min |
-| Best balance | DigitalOcean | 30 min |
 | Most control | AWS EC2 | 1-2 hrs |
 | Cheapest | Vultr/Linode | 1-2 hrs |
 
@@ -274,7 +273,6 @@ Keep these accessible:
 | Google App Passwords | https://myaccount.google.com/apppasswords |
 | Redis Cloud | https://redis.com/cloud |
 | Heroku | https://www.heroku.com |
-| DigitalOcean | https://www.digitalocean.com |
 | AWS | https://aws.amazon.com |
 | Let's Encrypt | https://letsencrypt.org |
 | SSL Labs | https://www.ssllabs.com |

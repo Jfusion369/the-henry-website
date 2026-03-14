@@ -149,16 +149,7 @@ heroku logs --tail
 9. Configure security groups for port 3000
 10. Set up SSL certificate with Let's Encrypt
 
-### Option 3: DigitalOcean App Platform
-
-1. Push code to GitHub
-2. Connect to DigitalOcean
-3. Create App from repository
-4. Add environment variables
-5. Deploy
-6. DigitalOcean handles SSL automatically
-
-### Option 4: Traditional Server (VPS)
+### Option 3: Traditional Server (VPS)
 
 ```bash
 # SSH into server

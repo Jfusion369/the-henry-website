@@ -237,7 +237,7 @@ This automatically detects local development vs production.
 ### Deployment Platforms
 - **Heroku**: Free tier available, good for testing
 - **Railway**: Modern alternative to Heroku
-- **AWS/DigitalOcean**: More control and scalability
+- **AWS**: More control and scalability
 - **Render**: Easy deployment with free tier
 - **Netlify/Vercel**: For frontend, use proxy for backend
 

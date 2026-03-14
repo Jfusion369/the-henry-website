@@ -252,13 +252,6 @@ body('email').isEmail()
 # Or: Let's Encrypt with Certbot on EC2
 ```
 
-**DigitalOcean:**
-```bash
-# Install Certbot
-sudo apt install certbot python3-certbot-nginx
-sudo certbot certonly --standalone -d thehenry.com
-```
-
 **Azure:**
 ```bash
 # Use App Service Certificates or Let's Encrypt
@@ -319,9 +312,8 @@ npm start
 **Solution:**
 
 **Option A: Use Managed Redis (Recommended)**
-- Heroku Heroku Redis
+- Heroku Redis
 - AWS ElastiCache
-- DigitalOcean Managed Redis
 - Azure Cache for Redis
 
 **Option B: Self-Hosted Redis**

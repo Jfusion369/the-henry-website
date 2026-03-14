@@ -1,0 +1,204 @@
+╔════════════════════════════════════════════════════════════════╗
+║     THE HENRY WEBSITE - DEPLOYMENT TEST CHEAT SHEET            ║
+║                    Keep this handy!                             ║
+╚════════════════════════════════════════════════════════════════╝
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🚀 QUICK START (Copy & Paste)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Terminal 1 - Start server:
+  cd server
+  npm start
+
+Terminal 2 - Run tests:
+  cd server
+  npm run test:deployment
+
+Wait for "All critical tests passed!" ✅
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📋 COMMANDS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Test localhost (default):
+  npm run test:deployment
+
+Test production:
+  npm run test:deployment:prod
+
+Test custom URL:
+  node deployment-test.js https://custom.com
+
+Test via PowerShell (Windows):
+  .\deployment-test.ps1
+
+Test via Batch (Windows):
+  deployment-test.bat
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✅ SUCCESS INDICATORS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ All critical tests passed!
+✨ Website is ready for deployment.
+📈 Pass Rate: 95%
+✅ Exit code: 0
+
+→ YOU CAN DEPLOY!
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+❌ FAILURE INDICATORS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+❌ Failed:   3
+❌ Please address critical failures before deploying.
+❌ Exit code: 1
+
+→ DO NOT DEPLOY! Fix issues first.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🔴 CRITICAL FAILURES (Must Fix)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Server Running
+  ├─ Cause: npm start not running
+  └─ Fix: Start server in Terminal 1
+
+Home Page Load
+  ├─ Cause: index.html missing
+  └─ Fix: Check file exists in root
+
+Security Headers
+  ├─ Cause: Helmet not configured
+  └─ Fix: Check server.js security setup
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🟡 WARNINGS (Non-critical)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Performance Slow
+  ├─ Impact: Can still deploy
+  └─ Note: Users may wait longer
+
+Rate Limit Headers
+  ├─ Impact: Can still deploy
+  └─ Note: Limit protection might not show
+
+CSS/JS Not Loading
+  ├─ Impact: Can still deploy
+  └─ Note: Check static file paths
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🐛 TROUBLESHOOTING
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Connection Refused:
+  npm start
+
+Port Already Used:
+  netstat -ano | findstr :3000
+  taskkill /PID <PID> /F
+
+Timeout:
+  Server is slow, give it more time
+
+HTTP 404:
+  Check HTML files in root directory
+
+Missing .env:
+  Create .env with required variables
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📋 TEST CHECKLIST
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Before Running:
+  ☐ npm install (first time)
+  ☐ .env file configured
+  ☐ Port 3000 free
+  ☐ Node.js installed
+
+Running Tests:
+  ☐ Terminal 1: npm start
+  ☐ Wait 2 seconds
+  ☐ Terminal 2: npm run test:deployment
+  ☐ Wait for results
+
+After Tests:
+  ☐ All critical passed?
+  ☐ Exit code 0?
+  ☐ Any red X marks?
+  ☐ Ready to deploy?
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+⏱️ TYPICAL RUNTIMES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Test Suite:        30-60 seconds
+Server Startup:    2-5 seconds
+Test Report:       Instant
+Total Time:        ~1 minute
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📊 TEST RESULTS FORMAT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ Passed:   45/48
+⚠️  Warnings: 2
+❌ Failed:   0
+📈 Pass Rate: 93.75%
+
+Explanation:
+  ✅ Green = Critical test passed
+  ⚠️  Yellow = Warning (non-critical)
+  ❌ Red = Critical test failed
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🔗 USEFUL LINKS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Quick Reference:
+  server/DEPLOYMENT_TEST_QUICK_START.md
+
+Full Guide:
+  server/DEPLOYMENT_TEST_GUIDE.md
+
+Overview:
+  server/DEPLOYMENT_TESTING_OVERVIEW.md
+
+Resource Index:
+  server/TEST_RESOURCE_INDEX.md
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✨ DEPLOYMENT DECISION TREE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+All critical tests pass?
+├─ YES → Any red X failures?
+│  ├─ NO → ✅ READY TO DEPLOY
+│  └─ YES → ❌ Fix issues first
+└─ NO → ❌ Fix critical failures first
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🎯 DEPLOYMENT PROCESS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Step 1: Run Tests Locally
+  npm run test:deployment
+
+Step 2: Check Results
+  Exit code 0? → ✅ Pass
+  Exit code 1? → ❌ Fail
+
+Step 3: Deploy (if passed)
+  [Your deployment command]
+
+Step 4: Test Production
+  npm run test:deployment:prod
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Version: 1.0
+Last Updated: March 14, 2026
+Print this sheet and keep at your desk!

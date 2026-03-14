@@ -282,7 +282,7 @@ node test-email.js
 # Use Certbot: https://certbot.eff.org/
 
 # Option 2: Cloud Provider
-# AWS Certificate Manager, Google Cloud, Azure, DigitalOcean all provide free SSL
+# AWS Certificate Manager, Google Cloud, Azure all provide free SSL
 
 # Option 3: Paid
 # Namecheap, GoDaddy, etc.
@@ -508,17 +508,7 @@ git push heroku main
 # 8. Set up SSL with Let's Encrypt
 ```
 
-### Option C: DigitalOcean App Platform
-```bash
-# 1. Connect GitHub repository
-# 2. Create new app
-# 3. Set environment variables
-# 4. Add Redis database
-# 5. Deploy
-# 6. DigitalOcean handles SSL automatically
-```
-
-### Option D: Vercel/AWS Amplify
+### Option C: Vercel/AWS Amplify
 ```bash
 # Not recommended for backend with WebSocket/Redis
 # Use API Gateway + Lambda instead (serverless)

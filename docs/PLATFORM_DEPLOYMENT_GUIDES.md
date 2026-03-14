@@ -6,9 +6,8 @@
 
 1. [Heroku](#heroku-deployment) - Easiest, perfect for small projects
 2. [AWS EC2](#aws-ec2-deployment) - Most control, scalable
-3. [DigitalOcean](#digitalocean-deployment) - Great balance of ease & control
-4. [Azure](#azure-deployment) - Enterprise solutions
-5. [VPS (Linode, Vultr)](#vps-deployment) - Full control, affordable
+3. [Azure](#azure-deployment) - Enterprise solutions
+4. [VPS (Linode, Vultr)](#vps-deployment) - Full control, affordable
 
 ---
 
@@ -205,84 +204,6 @@ Allow inbound traffic:
 
 ---
 
-## DIGITALOCEAN DEPLOYMENT
-
-**Best for:** Perfect balance of ease and control
-
-### Prerequisites
-- DigitalOcean account
-- Domain name
-
-### Step-by-Step (App Platform)
-
-```bash
-# 1. Push code to GitHub
-git push origin main
-
-# 2. In DigitalOcean Console:
-# - Go to Apps
-# - Click "Create App"
-# - Connect GitHub repository
-# - Select branch: main
-
-# 3. Configure services
-# Service: Backend
-#   - Source: GitHub
-#   - Repository: your-repo
-#   - Branch: main
-#   - Build command: npm install (in /server)
-#   - Run command: npm start (in /server)
-
-# 4. Add environment variables
-# Click "Edit" -> "Env"
-NODE_ENV=production
-JWT_SECRET=your-secret
-ADMIN_USERNAME=admin
-HASHED_ADMIN_PASSWORD=your-hash
-EMAIL_SERVICE=gmail
-EMAIL_USER=your@gmail.com
-EMAIL_PASSWORD=your-password
-
-# 5. Add database (Redis)
-# - Click "Create" -> "Redis Database"
-# - Connect to your app
-# - Environment variables auto-populated
-
-# 6. Deploy
-# Click "Deploy"
-# DigitalOcean builds and deploys automatically
-
-# 7. Monitor
-# Logs, metrics, and health checks visible in console
-```
-
-### Alternative: Droplet + App Platform
-
-```bash
-# 1. Create Droplet (Ubuntu 20.04)
-# 2. Follow AWS EC2 setup steps above
-# 3. Configure DNS in DigitalOcean console
-```
-
-### Costs
-- App Platform (basic): $12/month
-- Managed Redis: $15/month
-- Domain: $12/year
-- **Total: $30+/month**
-
-### Pros
-- ✅ Automatic deployments (git push)
-- ✅ Automatic SSL
-- ✅ Managed Redis available
-- ✅ Great documentation
-- ✅ Affordable
-
-### Cons
-- ⚠️ Slightly less flexible than raw VPS
-- ⚠️ Smaller community than AWS
-
----
-
 ## AZURE DEPLOYMENT
 
 **Best for:** Enterprise, Microsoft stack integration
@@ -435,14 +356,14 @@ sudo systemctl enable certbot.timer
 
 ## COMPARISON MATRIX
 
-| Feature | Heroku | AWS | DigitalOcean | Azure | VPS |
-|---------|--------|-----|--------------|-------|-----|
-| Ease | ⭐⭐⭐⭐⭐ | ⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐ |
-| Cost | $25+ | $5-20 | $30+ | $30+ | $5-15 |
-| Scalability | ⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐ |
-| Control | ⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐⭐⭐⭐ |
-| Support | ⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐ |
-| Setup Time | 15 min | 1-2 hrs | 30 min | 1 hr | 1-2 hrs |
+| Feature | Heroku | AWS | Azure | VPS |
+|---------|--------|-----|-------|-----|
+| Ease | ⭐⭐⭐⭐⭐ | ⭐⭐ | ⭐⭐⭐ | ⭐⭐ |
+| Cost | $25+ | $5-20 | $30+ | $5-15 |
+| Scalability | ⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐ |
+| Control | ⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐⭐⭐⭐ |
+| Support | ⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐ |
+| Setup Time | 15 min | 1-2 hrs | 1 hr | 1-2 hrs |
 
 ---
 
@@ -451,9 +372,8 @@ sudo systemctl enable certbot.timer
 **For This Project:**
 
 1. **Just Starting?** → **Heroku** (easiest, all-in-one)
-2. **Want Best Value?** → **DigitalOcean** (easy + affordable)
-3. **Need Maximum Scale?** → **AWS** (most enterprise-ready)
-4. **On Ultra-Budget?** → **Vultr/Linode VPS** (cheapest option)
+2. **Need Maximum Scale?** → **AWS** (most enterprise-ready)
+3. **On Ultra-Budget?** → **Vultr/Linode VPS** (cheapest option)
 
 ---
 
